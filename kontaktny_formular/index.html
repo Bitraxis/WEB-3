@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="assets/images/favicon-32x32.png">
+  <title>Kontaktný formulár</title>
+  <link rel="stylesheet" href="https://csstools.github.io/normalize.css/11.0.0/normalize.css">
+  <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/brython@3.13.2/brython.min.js">
+  </script>
+  <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/brython@3.13.2/brython_stdlib.js">
+  </script>
+  <link rel="stylesheet" href="assets/styles/style.css">
+
+<body onload="brython()" class="body" id="body">
+  <main id="main" class="main">
+    <form class="main__form">
+        <h1>Contact Us</h1>
+        <label for="first-name">First Name</label>
+        <input type="text" id="first-name" name="first-name" required>
+
+        <label for="last-name">Last Name</label>
+        <input type="text" id="last-name" name="last-name" required>
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required>
+        <span>Please enter a valid email address</span>
+
+        <label for="query-type">Query Type</label>
+        <div>
+          <input type="radio" id="enquiry" name="query-type" value="enquiry" checked />
+          <label for="enquiry">General Enquiry</label>
+        </div>
+
+        <div>
+          <input type="radio" id="support" name="query-type" value="support" />
+          <label for="support">Support</label>
+        </div>
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" required></textarea>
+
+        <label for="consent">
+          <input type="checkbox" id="consent" name="consent" required>
+          I consent to being contacted by the team
+        </label>
+
+        <button type="submit">Submit</button>
+
+    </form>
+  </main>
+  <script type="text/javascript" src="/kontaktny_formular/assets/scripts/main.js"></script>
+  <script type="text/python" src="/kontaktny_formular/assets/scripts/main.py"></script>
+</body>
+</html>
