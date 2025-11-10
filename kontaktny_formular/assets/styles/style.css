@@ -1,67 +1,117 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap');
+
 :root {
     --primary-green-200: hsl(148, 38%, 91%);
     --primary-green-600: hsl(169, 82%, 27%);
     --primary-red: hsl(0, 66%, 54%);
     --neutral-white: hsl(0, 0%, 100%);
-    --neutral-grey-500: hsl(186, 15%, 59%);
-    --neutral-grey-900: hsl(187, 24%, 22%);
+    --neutral-grey-200: hsl(187, 24%, 92%);
+    --neutral-grey-400: hsl(186, 15%, 69%);
+    --neutral-grey-600: hsl(187, 24%, 22%);
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-}
-
-.karla-regular {
-    font-family: "Karla", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-}
-
-.karla-bold {
-    font-family: "Karla", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 700;
-    font-style: normal;
-}
-
+/* Base reset */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
 body {
-    box-sizing: border-box;
     margin: 0;
-    padding: 0;
-    font-family: 'Karla', sans-serif;
+    font-family: 'Karla', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
     font-size: 16px;
+    color: var(--neutral-grey-600);
 }
 
 .body {
     background-color: var(--primary-green-200);
     min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 16px;
 }
 
+/* Card */
 .main {
-    border-radius: 8px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: var(--neutral-white);
+    width: min(720px, 92vw);
+    background: var(--neutral-white);
+    border-radius: 12px;
+    padding: 36px 40px;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.02);
 }
 
-@media screen and (max-width: 768px) {
-    .main {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        width: 50%;
-        margin: 10px auto;
-        padding: 40px;
-        border-radius: 8px;
-        height: 85vh;
-        width: 75vw;
-    }
-    .main__form {
-        width: 100%;
-    }
+/* Contact form BEM styles */
+.contact-form__form { width: 100%; }
+.contact-form__panel { border: 0; padding: 0; margin: 0; }
+
+.contact-form__title {
+    margin: 0 0 24px 0;
+    font-size: 24px;
+    color: var(--neutral-grey-600);
+    font-weight: 700;
 }
+
+.contact-form__grid--two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.contact-form__field { margin-bottom: 18px; }
+.contact-form__label { display: block; font-size: 13px; margin-bottom: 8px; color: var(--neutral-grey-600); }
+.contact-form__required { color: var(--primary-green-600); margin-left: 6px; font-weight: 700; }
+
+.contact-form__input,
+.contact-form__textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--neutral-grey-200);
+    background: #fff;
+    outline: none;
+    color: var(--neutral-grey-600);
+    font-size: 15px;
+}
+.contact-form__input:focus,
+.contact-form__textarea:focus { box-shadow: 0 0 0 3px rgba(169, 220, 203, 0.25); border-color: var(--primary-green-600); }
+.contact-form__input--block { display: block; }
+.contact-form__textarea { min-height: 120px; resize: vertical; }
+
+.contact-form__hint { display: block; margin-top: 6px; font-size: 13px; color: var(--neutral-grey-400); }
+
+/* Radio option pills */
+.contact-form__options { display: flex; gap: 12px; margin-top: 8px; }
+.contact-form__option {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 16px; border-radius: 8px; border: 1px solid var(--neutral-grey-200);
+    background: #fff; cursor: pointer; min-width: 200px;
+}
+.contact-form__option input[type="radio"] { appearance: none; -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--neutral-grey-400); display: inline-block; position: relative; }
+.contact-form__option input[type="radio"]:checked { background: var(--primary-green-600); border-color: var(--primary-green-600); }
+.contact-form__option-label { font-size: 14px; color: var(--neutral-grey-600); }
+
+/* Consent row */
+.contact-form__consent { display: flex; align-items: flex-start; gap: 10px; }
+.contact-form__checkbox { width: 16px; height: 16px; margin-right: 8px; }
+.contact-form__consent-text { font-size: 14px; color: var(--neutral-grey-600); }
+
+.contact-form__actions { margin-top: 20px; }
+.contact-form__submit {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 8px;
+    background: var(--primary-green-600);
+    color: white;
+    border: 0;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .main { padding: 28px; width: 92vw; }
+    .contact-form__grid--two { grid-template-columns: 1fr; }
+    .contact-form__options { flex-direction: column; }
+    .contact-form__option { min-width: auto; }
+}
+

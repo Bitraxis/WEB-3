@@ -16,43 +16,64 @@
     src="https://cdn.jsdelivr.net/npm/brython@3.13.2/brython_stdlib.js">
   </script>
   <link rel="stylesheet" href="assets/styles/style.css">
-
 <body onload="brython()" class="body" id="body">
   <main id="main" class="main">
-    <form class="main__form">
-        <h1>Contact Us</h1>
-        <label for="first-name">First Name</label>
-        <input type="text" id="first-name" name="first-name" required>
+    <div class="contact-form">
+      <form class="contact-form__form" novalidate>
+        <fieldset class="contact-form__panel">
+          <h1 class="contact-form__title">Contact Us</h1>
 
-        <label for="last-name">Last Name</label>
-        <input type="text" id="last-name" name="last-name" required>
+          <div class="contact-form__grid contact-form__grid--two">
+            <div class="contact-form__field">
+              <label class="contact-form__label" for="first-name">First Name <span class="contact-form__required">*</span></label>
+              <input class="contact-form__input" type="text" id="first-name" name="first-name" required />
+            </div>
 
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" required>
-        <span>Please enter a valid email address</span>
+            <div class="contact-form__field">
+              <label class="contact-form__label" for="last-name">Last Name <span class="contact-form__required">*</span></label>
+              <input class="contact-form__input" type="text" id="last-name" name="last-name" required />
+            </div>
+          </div>
 
-        <label for="query-type">Query Type</label>
-        <div>
-          <input type="radio" id="enquiry" name="query-type" value="enquiry" checked />
-          <label for="enquiry">General Enquiry</label>
-        </div>
+          <div class="contact-form__field">
+            <label class="contact-form__label" for="email">Email Address <span class="contact-form__required">*</span></label>
+            <input class="contact-form__input contact-form__input--block" type="email" id="email" name="email" required />
+            <span class="contact-form__hint">Please enter a valid email address</span>
+          </div>
 
-        <div>
-          <input type="radio" id="support" name="query-type" value="support" />
-          <label for="support">Support</label>
-        </div>
+          <div class="contact-form__field">
+            <div class="contact-form__label">Query Type <span class="contact-form__required">*</span></div>
+            <div class="contact-form__options" role="radiogroup" aria-label="Query type">
+              <label class="contact-form__option">
+                <input class="contact-form__radio" type="radio" name="query-type" value="general" checked />
+                <span class="contact-form__option-label">General Enquiry</span>
+              </label>
+              <label class="contact-form__option">
+                <input class="contact-form__radio" type="radio" name="query-type" value="support" />
+                <span class="contact-form__option-label">Support Request</span>
+              </label>
+            </div>
+          </div>
 
-        <label for="message">Message</label>
-        <textarea id="message" name="message" required></textarea>
+          <div class="contact-form__field">
+            <label class="contact-form__label" for="message">Message <span class="contact-form__required">*</span></label>
+            <textarea class="contact-form__textarea" id="message" name="message" required></textarea>
+          </div>
 
-        <label for="consent">
-          <input type="checkbox" id="consent" name="consent" required>
-          I consent to being contacted by the team
-        </label>
+          <div class="contact-form__field contact-form__field--consent">
+            <label class="contact-form__consent">
+              <input class="contact-form__checkbox" type="checkbox" id="consent" name="consent" required />
+              <span class="contact-form__consent-text">I consent to being contacted by the team</span>
+            </label>
+            <span class="contact-form__hint">To submit this form, please consent to being contacted</span>
+          </div>
 
-        <button type="submit">Submit</button>
-
-    </form>
+          <div class="contact-form__actions">
+            <button class="contact-form__submit" type="submit">Submit</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
   </main>
   <script type="text/javascript" src="/kontaktny_formular/assets/scripts/main.js"></script>
   <script type="text/python" src="/kontaktny_formular/assets/scripts/main.py"></script>
