@@ -19,33 +19,35 @@
 <body onload="brython()" class="body" id="body">
   <main id="main" class="main">
     <div class="contact-form">
-      <form class="contact-form__form" novalidate>
+  <form class="contact-form__form">
         <fieldset class="contact-form__panel">
           <h1 class="contact-form__title">Contact Us</h1>
 
           <div class="contact-form__grid contact-form__grid--two">
             <div class="contact-form__field">
               <label class="contact-form__label" for="first-name">First Name <span class="contact-form__required">*</span></label>
-              <input class="contact-form__input" type="text" id="first-name" name="first-name" required />
+              <input class="contact-form__input" type="text" id="first-name" name="first-name" required aria-describedby="first-name-error" />
+              <span id="first-name-error" class="contact-form__error" aria-live="polite">This field is required</span>
             </div>
 
             <div class="contact-form__field">
               <label class="contact-form__label" for="last-name">Last Name <span class="contact-form__required">*</span></label>
-              <input class="contact-form__input" type="text" id="last-name" name="last-name" required />
+              <input class="contact-form__input" type="text" id="last-name" name="last-name" required aria-describedby="last-name-error" />
+              <span id="last-name-error" class="contact-form__error" aria-live="polite">This field is required</span>
             </div>
           </div>
 
           <div class="contact-form__field">
             <label class="contact-form__label" for="email">Email Address <span class="contact-form__required">*</span></label>
-            <input class="contact-form__input contact-form__input--block" type="email" id="email" name="email" required />
-            <span class="contact-form__hint">Please enter a valid email address</span>
+            <input class="contact-form__input contact-form__input--block" type="email" id="email" name="email" required aria-describedby="email-error" />
+            <span id="email-error" class="contact-form__error" aria-live="polite">Please enter a valid email address</span>
           </div>
 
           <div class="contact-form__field">
             <div class="contact-form__label">Query Type <span class="contact-form__required">*</span></div>
             <div class="contact-form__options" role="radiogroup" aria-label="Query type">
               <label class="contact-form__option">
-                <input class="contact-form__radio" type="radio" name="query-type" value="general" checked />
+                <input class="contact-form__radio" type="radio" name="query-type" value="general" checked required aria-describedby="query-type-error" />
                 <span class="contact-form__option-label">General Enquiry</span>
               </label>
               <label class="contact-form__option">
@@ -53,19 +55,21 @@
                 <span class="contact-form__option-label">Support Request</span>
               </label>
             </div>
+            <span id="query-type-error" class="contact-form__error" aria-live="polite">Please select a query type</span>
           </div>
 
           <div class="contact-form__field">
             <label class="contact-form__label" for="message">Message <span class="contact-form__required">*</span></label>
-            <textarea class="contact-form__textarea" id="message" name="message" required></textarea>
+            <textarea class="contact-form__textarea" id="message" name="message" required aria-describedby="message-error"></textarea>
+            <span id="message-error" class="contact-form__error" aria-live="polite">This field is required</span>
           </div>
 
           <div class="contact-form__field contact-form__field--consent">
             <label class="contact-form__consent">
-              <input class="contact-form__checkbox" type="checkbox" id="consent" name="consent" required />
+              <input class="contact-form__checkbox" type="checkbox" id="consent" name="consent" required aria-describedby="consent-error" />
               <span class="contact-form__consent-text">I consent to being contacted by the team</span>
             </label>
-            <span class="contact-form__hint">To submit this form, please consent to being contacted</span>
+            <span id="consent-error" class="contact-form__error" aria-live="polite">To submit this form, please consent to being contacted</span>
           </div>
 
           <div class="contact-form__actions">
@@ -75,7 +79,6 @@
       </form>
     </div>
   </main>
-  <script type="text/javascript" src="/kontaktny_formular/assets/scripts/main.js"></script>
   <script type="text/python" src="/kontaktny_formular/assets/scripts/main.py"></script>
 </body>
 </html>

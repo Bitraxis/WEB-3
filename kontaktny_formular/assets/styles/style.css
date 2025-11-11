@@ -115,3 +115,49 @@ body {
     .contact-form__option { min-width: auto; }
 }
 
+/* Validation / error state styles (CSS-only approach) */
+.contact-form__error {
+    display: none;
+    color: var(--primary-red);
+    font-size: 13px;
+    margin-top: 6px;
+    line-height: 1.2;
+}
+
+/* Red border for invalid controls - CSS-only behaviour without JS
+   We can't detect a "submit happened" state without JS, so we show
+   inline errors when a control becomes focused and is invalid. Also
+   when the browser focuses the first invalid control during submit,
+   that control's message will become visible. This is a workable
+   pure-CSS compromise (no JavaScript required).
+*/
+.contact-form__input:focus:invalid,
+.contact-form__input:invalid:focus,
+.contact-form__textarea:focus:invalid,
+.contact-form__textarea:invalid:focus {
+    border-color: var(--primary-red);
+    box-shadow: none;
+}
+
+/* Show the inline error for the field that currently has focus and is invalid */
+.contact-form__input:focus:invalid + .contact-form__error,
+.contact-form__textarea:focus:invalid + .contact-form__error {
+    display: block;
+}
+
+/* For radio groups and consent (wrapped controls) we rely on :has() where
+   available: when an invalid input inside the group has focus, reveal the
+   group error. Note: :has() is supported in modern browsers only; native
+   validation popups remain the fallback in older browsers. */
+.contact-form__options:has(:focus:invalid) + .contact-form__error {
+    display: block;
+}
+.contact-form__options:has(:focus:invalid) .contact-form__option {
+    border-color: var(--primary-red);
+}
+
+.contact-form__consent:has(input:focus:invalid) + .contact-form__error {
+    display: block;
+}
+
+
