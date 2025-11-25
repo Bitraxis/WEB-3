@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript vs Python - Dominik Nagy  & Dominik Štrbák</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <table>
+        <caption>
+            Javascript vs Python - Dominik Nagy  & Dominik Štrbák
+        </caption>
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">JavaScript</th>
+                <th scope="col">Python</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row"> Premenné</th>
+                <td>
+                    <pre><code>
+let x = 10; // let je blokovo viazaná premenná
+const y = 20; // const je konštanta
+var z = 30; // var je funkciou viazaná premenná
+                    </code></pre>
+                </td>
+                <td>
+                    <pre><code>
+x = 10
+y = 20
+                    </code></pre>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Cyklus for</th>
+                <td>
+                    <pre><code>
+for (let i = 0; i < 5; i++) { 
+    console.log(i);
+}
+                    </code></pre>
+                </td>
+                <td>
+                    <pre><code>
+for i in range(5):
+    print(i)
+                    </code></pre>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Cyklus while</th>
+                <td>
+                    <pre><code>
+let i = 0;
+while (i < 5) {
+    console.log(i);
+        i++;
+}
+                    </code></pre>
+                </td>
+                <td>
+                    <pre><code>
+i = 0
+while i < 5:
+    print(i)
+    i += 1
+                    </code></pre>
+                </td>   
+            </tr>
+            <tr>
+                <th scope="row">Funkcia</th>
+                <td>
+                    <pre><code>
+function ahoj() {
+    console.log("Ahoj, svet!");
+}
+                    </code></pre>
+                </td>
+                <td>
+                    <pre><code>
+def ahoj():
+    print("Ahoj, svet!")
+                    </code></pre>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Podmienky</th>
+                <td>
+                    <pre><code>
+if (x > 0) {
+    console.log("Pozitívne");
+}
+else if (x === 0) {
+    console.log("Nula");
+}
+else {
+    console.log("Negatívne");
+}
+                    </code></pre>
+                </td>
+                <td>
+                    <pre><code>
+if x > 0:
+    print("Pozitívne")
+elif x == 0:
+    print("Nula")
+else:
+    print("Negatívne")
+                    </code></pre>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Pole</th>
+                <td>
+                    <pre><code>
+let pole = [1, 2, 3, 4, 5];
+                    </code></pre>
+                </td>
+                <td>
+                    <pre><code>
+pole = [1, 2, 3, 4, 5]
+                    </code></pre>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Slovník</th>
+                <td>
+                    <pre><code>
+let slovnik = { "meno": "Ján", "vek": 30 };
+                    </code></pre>
+                </td>
+                <td>
+                    <pre><code>
+slovnik = { "meno": "Ján", "vek": 30 }
+                    </code></pre>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
