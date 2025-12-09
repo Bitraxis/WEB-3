@@ -1,6 +1,6 @@
 console.log("Hello, World!");
 
-let num1 = -2;
+let num1 = prompt("Enter a number:");
 
 if (num1 == 0) {
 	var even = "zero";
