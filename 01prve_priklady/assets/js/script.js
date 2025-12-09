@@ -1,11 +1,10 @@
 console.log("Hello, World!");
 
-let num1 = 5;
+let num1 = -2;
 
-if (num1 % 2 == 0) {
+if (num1 == 0) {
 	var even = "zero";
-
-} else if (num1 === 0){
+} else if (num1 % 2 === 0){
 	var even = "true";
 } else {
 	var even = "false";
