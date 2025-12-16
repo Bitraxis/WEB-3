@@ -4,16 +4,23 @@
 // Vytvor premenné s tvojimi údajmi:
 // meno, vek, mesto, konicek
 
+let idMeno = document.getElementById("meno").value;
+let idVek = document.getElementById("vek").value;
+let idMesto = document.getElementById("mesto").value;
+let idKonicek = document.getElementById("konicek").value;
 
+const meno = "Dominik Nagy";
+const vek = 18;
+const mesto = "Tužina";
+const konicek = "programovanie";
 
 // ===================================
 // 2. VÝPOČTY
 // ===================================
 // Vypočítaj rok narodenia (aktuálny rok 2025 - vek)
-
-
+let rokNarodenia = 2025 - vek;
 // Vypočítaj koľko rokov ti chýba do 18 (18 - vek)
-
+let doDospelosti = 18 - vek;
 
 
 // ===================================
