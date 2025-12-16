@@ -52,7 +52,7 @@ document.querySelector("#do-dospelosti").textContent = doDospelosti;
 // Použi template literals na vytvorenie vety:
 // "Ahoj! Volám sa [meno], mám [vek] rokov a pochádzam z [mesto]. Vo voľnom čase rád/-a [konicek]."
 // Zobraz text do elementu #o-mne
-let bioText = `Ahoj! Volám sa ${meno}, mám ${vek} rokov a pochádzam z ${mesto}. Vo voľnom čase rád/-a ${konicek}.`;
+let bioText = `Ahoj! Volám sa ${meno}, mám ${vek} rokov a pochádzam z ${mesto}. Vo voľnom čase mám rád ${konicek}.`;
 document.querySelector("#o-mne").textContent = bioText;
 
 // ===================================
