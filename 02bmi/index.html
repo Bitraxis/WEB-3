@@ -4,18 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BMI kalkulačka</title>
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-    <main>
-        <label for="hmotnost">Hmotnosť</label>
-        <input id="hmotnost" type="text" name="hmotnost" required minlength="2" maxlength="12" size="10">
-        <br>
-        <label for="vyska"> Výška</label>
-        <input type="text" id="vyska" name="vyska" required minlength="2" maxlength="10" size="10">
-        <br>
-        <button id="btnAccept">Vypocet</button>
-        <p id="out"></p>
+    <main id="main" class="main">
+        <h1>BMI Kalkulačka</h1>
+        
+        <div class="input-group">
+            <input id="hmotnost" type="number" name="hmotnost" placeholder="napr. 80" required>
+            <label for="hmotnost">Hmotnosť (kg)</label>
+        </div>
 
+        <div class="input-group">
+            <input id="vyska" type="number" name="vyska" placeholder="napr. 180" required >
+            <label for="vyska">Výška (cm)</label>
+        </div>
+
+        <button id="btnAccept">Výpočet</button>
+        <p id="out" class="hidden"></p>
     </main>
     <script src="assets/script.js"></script>
 </body>

@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400..700;1,400..700&display=swap');
+body {
+    background-color: #c0c0c0;
+    font-family: "Libre Baskerville", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    text-align: center;
+    padding: 50px;
+}
+input[type="number"] {
+    font-family: "Libre Baskerville", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    text-align: center;
+}
+
+.main {
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 24px;
+    color: #000000;
+}
+
+.input-group {
+    margin: 15px 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input {
+    border: 1px solid #000000;
+    padding: 5px;
+    width: 200px;
+}
+
+button {
+    background-color: #cccccc;
+    border: 2px outset #ffffff;
+    padding: 8px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+button:active {
+    border-style: inset;
+}
+
+.hidden {
+    visibility: hidden;
+}
+.shown {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #000000;
+    background-color: #ffffcc;
+}

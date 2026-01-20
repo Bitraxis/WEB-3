@@ -1,9 +1,11 @@
 let btnAccept = document.getElementById('btnAccept');
-const hmotnost = document.getElementById('hmotnost').value
-const vyska = document.getElementById('vyska').value
 const out = document.getElementById('out');
-let odpoved = null
-document.addEventListener('click', function() {
+const hmotnostInput = document.getElementById('hmotnost');
+const vyskaInput = document.getElementById('vyska');
+
+function calculateBMI() {
+    const hmotnost = document.getElementById('hmotnost').value;
+    const vyska = document.getElementById('vyska').value;
     const BMI = Math.round((hmotnost / (vyska*vyska))*100000) / 10;
     console.log(BMI);
     if (BMI < 18.5) {
@@ -27,5 +29,17 @@ document.addEventListener('click', function() {
         console.log(odpoved);
         out.textContent = BMI + odpoved;
     };
-} );
+}
+hmotnostInput.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        calculateBMI();
+    }
+});
+vyskaInput.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        calculateBMI();
+    }
+});
+
+btnAccept.addEventListener('click', calculateBMI);
 
