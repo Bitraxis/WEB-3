@@ -1,13 +1,14 @@
+
 let btnAccept = document.getElementById('btnAccept');
 const out = document.getElementById('out');
 const hmotnostInput = document.getElementById('hmotnost');
 const vyskaInput = document.getElementById('vyska');
 
+let matext = false;
 function calculateBMI() {
     const hmotnost = document.getElementById('hmotnost').value;
     const vyska = document.getElementById('vyska').value;
     const BMI = Math.round((hmotnost / (vyska*vyska))*100000) / 10;
-    let matext = false;
     console.log(BMI);
     if (BMI < 18.5) {
         let odpoved = " = Podvyživený ";
@@ -39,7 +40,7 @@ function calculateBMI() {
     if (matext === true) {
         out.classList.toggle("shown");
     } else {
-        out.classList.toggle("hidden");
+        matext = false;
     }
 }
 hmotnostInput.addEventListener('keypress', function(event) {
