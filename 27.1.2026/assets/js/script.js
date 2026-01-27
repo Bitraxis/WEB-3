@@ -40,3 +40,12 @@ function showName(e) {
     console.log(prvePismenoMena + "." + tretiePismenoMena + ".");
     document.getElementById("out").innerText = celeMeno + " = dlzka mena je (aj z medzerou) " + dlzkaMena + " jeho inicialky su: " + prvePismenoMena + "." + tretiePismenoMena + "." + " email: " + email;
 }
+
+let prvaVeta = "JavaScript je super";
+let druhaVeta = "Programovanie nás bavý";
+
+if ( prvaVeta.length > druhaVeta.length ) {
+    console.log(prvaVeta + " : je dlhsia");
+} else {
+    console.log(druhaVeta + " : je dlhsia");    
+}
