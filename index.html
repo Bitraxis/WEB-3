@@ -172,6 +172,55 @@
 		.mini-btn:focus {
 			background: #1c4f1c;
 		}
+
+		.readme-box {
+			margin: 10px 0 14px;
+			padding: 10px;
+			border: 1px dashed var(--line);
+			background: rgba(0, 0, 0, 0.2);
+		}
+
+		.readme-content {
+			color: var(--fg);
+		}
+
+		.readme-content h1,
+		.readme-content h2,
+		.readme-content h3,
+		.readme-content h4,
+		.readme-content h5,
+		.readme-content h6 {
+			margin: 10px 0 6px;
+			color: #d6ff94;
+		}
+
+		.readme-content p {
+			margin: 8px 0;
+		}
+
+		.readme-content ul,
+		.readme-content ol {
+			margin: 8px 0;
+			padding-left: 20px;
+			list-style: initial;
+		}
+
+		.readme-content li::before {
+			content: "";
+		}
+
+		.readme-content code {
+			background: #011001;
+			border: 1px solid #184218;
+			padding: 0 4px;
+		}
+
+		.readme-content pre {
+			background: #011001;
+			border: 1px solid #184218;
+			padding: 8px;
+			overflow: auto;
+		}
 	</style>
     <script src="https://cdn.jsdelivr.net/npm/brython@3.14.0/brython.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/brython@3.14.0/brython_stdlib.js"></script>
@@ -212,6 +261,10 @@ __        ________ ____       _____
 				<button id="brythonBtn" class="mini-btn" type="button">Ping</button>
 				<span id="brythonStatus">ready</span>
 			</p>
+			<section class="readme-box" aria-label="README preview">
+				<h2>README Preview</h2>
+				<div id="readmeContent" class="readme-content">Loading README.md via Brython...</div>
+			</section>
 
 			<h2>Available Pages</h2>
 			<ul>
@@ -380,20 +433,142 @@ __        ________ ____       _____
 	</script>
 	<script src="wasm/retro_wasm.js"></script>
 	<script type="text/python">
-from browser import document, window
+from browser import ajax, document, window
+import re
 
 count = 0
 
-def on_ping(event):
-    global count
-    count += 1
-    document["brythonStatus"].text = f"pong #{count}"
 
-    # Use jQuery from Brython to show JS interop.
-    window.jQuery("#brythonStatus").css("color", "#ffd24d")
-    window.jQuery("#brythonStatus").attr("title", "Updated by Brython + jQuery")
+def on_ping(event):
+	global count
+	count += 1
+	document["brythonStatus"].text = f"pong #{count}"
+
+	# Use jQuery from Brython to show JS interop.
+	window.jQuery("#brythonStatus").css("color", "#ffd24d")
+	window.jQuery("#brythonStatus").attr("title", "Updated by Brython + jQuery")
+
+
+def escape_html(text):
+	return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def render_inline(text):
+	safe = escape_html(text)
+	safe = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2" target="_blank" rel="noopener">\1</a>', safe)
+	safe = re.sub(r"`([^`]+)`", r"<code>\1</code>", safe)
+	safe = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", safe)
+	safe = re.sub(r"\*([^*]+)\*", r"<em>\1</em>", safe)
+	return safe
+
+
+def markdown_to_html(markdown_text):
+	lines = markdown_text.splitlines()
+	out = []
+	paragraph = []
+	in_code = False
+	list_type = None
+
+	def flush_paragraph():
+		nonlocal paragraph
+		if paragraph:
+			out.append("<p>" + " ".join(paragraph) + "</p>")
+			paragraph = []
+
+	def close_list():
+		nonlocal list_type
+		if list_type:
+			out.append(f"</{list_type}>")
+			list_type = None
+
+	for raw_line in lines:
+		line = raw_line.rstrip("\n")
+		stripped = line.strip()
+
+		if stripped.startswith("```"):
+			flush_paragraph()
+			close_list()
+			if not in_code:
+				out.append("<pre><code>")
+				in_code = True
+			else:
+				out.append("</code></pre>")
+				in_code = False
+			continue
+
+		if in_code:
+			out.append(escape_html(raw_line))
+			continue
+
+		if stripped == "":
+			flush_paragraph()
+			close_list()
+			continue
+
+		heading = re.match(r"^(#{1,6})\s+(.*)$", stripped)
+		if heading:
+			flush_paragraph()
+			close_list()
+			level = len(heading.group(1))
+			out.append(f"<h{level}>{render_inline(heading.group(2))}</h{level}>")
+			continue
+
+		ul_item = re.match(r"^[-*]\s+(.*)$", stripped)
+		if ul_item:
+			flush_paragraph()
+			if list_type != "ul":
+				close_list()
+				out.append("<ul>")
+				list_type = "ul"
+			out.append(f"<li>{render_inline(ul_item.group(1))}</li>")
+			continue
+
+		ol_item = re.match(r"^\d+\.\s+(.*)$", stripped)
+		if ol_item:
+			flush_paragraph()
+			if list_type != "ol":
+				close_list()
+				out.append("<ol>")
+				list_type = "ol"
+			out.append(f"<li>{render_inline(ol_item.group(1))}</li>")
+			continue
+
+		close_list()
+		paragraph.append(render_inline(stripped))
+
+	flush_paragraph()
+	close_list()
+	if in_code:
+		out.append("</code></pre>")
+
+	return "\n".join(out)
+
+
+def on_readme_loaded(event):
+	req = event.target
+	if req.status in (0, 200):
+		document["readmeContent"].innerHTML = markdown_to_html(req.text)
+	else:
+		document["readmeContent"].text = "Could not load README.md"
+
+
+def load_readme():
+	def on_success(data, *args):
+		document["readmeContent"].innerHTML = markdown_to_html(str(data))
+
+	def on_fail(*args):
+		document["readmeContent"].text = "Could not load README.md"
+
+	try:
+		request = window.jQuery.get("README.md", on_success)
+		request.fail(on_fail)
+	except Exception:
+		document["readmeContent"].text = "Could not load README.md"
+
 
 document["brythonBtn"].bind("click", on_ping)
+document["brythonStatus"].text = "ready (Brython active)"
+load_readme()
 	</script>
 	<script>
 		window.addEventListener("DOMContentLoaded", function () {
@@ -401,6 +576,24 @@ document["brythonBtn"].bind("click", on_ping)
 				window.brython();
 			}
 		});
+	</script>
+	<script>
+		window.setTimeout(function () {
+			const readmeElement = document.getElementById("readmeContent");
+			if (!readmeElement) {
+				return;
+			}
+
+			if (readmeElement.textContent.indexOf("Loading README.md via Brython...") !== -1) {
+				$.get("README.md")
+					.done(function (data) {
+						readmeElement.textContent = data;
+					})
+					.fail(function () {
+						readmeElement.textContent = "Could not load README.md";
+					});
+			}
+		}, 2500);
 	</script>
 	<script>
 		if ("serviceWorker" in navigator) {

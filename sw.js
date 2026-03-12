@@ -4,7 +4,8 @@ const STATIC_ASSETS = [
   "./index.html",
   "./manifest.webmanifest",
   "./jquery-4.0.0.min.js",
-  "./wasm/retro_wasm.js"
+  "./wasm/retro_wasm.js",
+  "./README.md"
 ];
 
 self.addEventListener("install", (event) => {

@@ -1,4 +1,4 @@
-# Vitaj v mojom repositári!
+# Welcome to my repo!
 
-😀 - Tu je či funguje emoji!
+😀 - Emoji test
 
