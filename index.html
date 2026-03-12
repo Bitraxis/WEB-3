@@ -208,7 +208,10 @@ __        ________ ____       _____
 			</ul>
 
 			<footer>
-				Best viewed on a glowing CRT monitor at 1024x768 No trackers. Just HTML.
+				| HTML: <span id="htmlVersion">detecting...</span> |
+				JavaScript: <span id="jsVersion">detecting...</span> |
+				jQuery: <span id="jqVersion">detecting...</span> |
+				CSS: <span id="cssVersion">detecting...</span> |
 			</footer>
 		</main>
 	</div>
@@ -259,6 +262,63 @@ __        ________ ____       _____
 			}
 
 			$("#referrer").text(sourceSite);
+		});
+	</script>
+	<script>
+		$(function () {
+			const jqVersion = $.fn && $.fn.jquery ? $.fn.jquery : "not loaded";
+
+			const htmlVersion = (function () {
+				if (!document.doctype) {
+					return "unknown doctype";
+				}
+
+				const isHtml5 =
+					document.doctype.name.toLowerCase() === "html" &&
+					document.doctype.publicId === "" &&
+					document.doctype.systemId === "";
+
+				return isHtml5 ? "HTML5" : "custom doctype";
+			}());
+
+			const jsVersion = (function () {
+				try {
+					new Function("let x = 1; const y = x ?? 0; return ({a: y})?.a;");
+					return "ECMAScript 2020+";
+				} catch (error) {
+					try {
+						new Function("let x = 1; const y = x; return y;");
+						return "ECMAScript 2015+";
+					} catch (innerError) {
+						return "legacy JavaScript";
+					}
+				}
+			}());
+
+			const cssVersion = (function () {
+				if (!window.CSS || typeof CSS.supports !== "function") {
+					return "unknown";
+				}
+
+				const hasGrid = CSS.supports("display", "grid");
+				const hasFlex = CSS.supports("display", "flex");
+				const hasVariables = CSS.supports("--retro", "1");
+
+				if (hasGrid && hasFlex && hasVariables) {
+					return "modern CSS";
+				}
+
+				if (hasFlex) {
+					return "CSS3+";
+				}
+
+				return "basic CSS";
+			}());
+
+			$("#htmlVersion").text(htmlVersion);
+			$("#jsVersion").text(jsVersion);
+			$("#jqVersion").text(jqVersion);
+			$("#cssVersion").text(cssVersion);
 		});
 	</script>
 	<script src="wasm/retro_wasm.js"></script>
