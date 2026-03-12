@@ -146,7 +146,23 @@
 			color: var(--dim);
 			font-size: 0.9rem;
 		}
+
+		.wasm-line {
+			margin: 6px 0 12px;
+			color: var(--dim);
+		}
+
+		.wasm-line strong {
+			color: var(--accent);
+		}
 	</style>
+	<noscript>
+		<style>
+			.wasm-js-only {
+				display: none;
+			}
+		</style>
+	</noscript>
 </head>
 <body>
 	<div class="wrap">
@@ -167,6 +183,7 @@ __        ________ ____       _____
 			<p>
 				<span id="statusText" class="blink">[ONLINE]</span> User: guest<noscript>#¯\_(ツ)_/¯</noscript><span class="random"></span>
 			</p>
+			<p id="wasmText" class="wasm-line"><strong>WASM: </strong><span class="wasm-js-only">waiting for wasm/retro_tools.wasm</span><noscript>OFFLINE | JS DISABLED</noscript></p>
 
 			<h2>Available Pages</h2>
 			<ul>
@@ -238,6 +255,7 @@ __        ________ ____       _____
 			$("#referrer").text(sourceSite);
 		});
 	</script>
+	<script src="wasm/retro_wasm.js"></script>
 </body>
 
 </html>
