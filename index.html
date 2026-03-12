@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>WEB-3</title>
+    <script src="jquery-4.0.0.min.js"></script>
+	<style>
+		:root {
+			--bg: #020a02;
+			--fg: #7cff6b;
+			--dim: #3ea83a;
+			--accent: #ffd24d;
+			--panel: #001500;
+			--line: #36d936;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		html,
+		body {
+			margin: 0;
+			min-height: 100%;
+		}
+
+		body {
+			background: var(--bg);
+			color: var(--fg);
+			font-family: "Courier New", Courier, monospace;
+			line-height: 1.4;
+			background-image:
+				radial-gradient(rgba(124, 255, 107, 0.08) 1px, transparent 1px),
+				linear-gradient(180deg, rgba(124, 255, 107, 0.04) 0%, rgba(124, 255, 107, 0) 40%);
+			background-size: 3px 3px, 100% 100%;
+		}
+
+		.wrap {
+			max-width: 920px;
+			margin: 0 auto;
+			padding: 16px;
+		}
+
+		.screen {
+			background: var(--panel);
+			border: 3px double var(--line);
+			box-shadow: 0 0 0 2px #0d2f0d, 0 0 24px rgba(124, 255, 107, 0.25) inset;
+			padding: 16px;
+		}
+
+		.status {
+			margin: 0 0 12px;
+			color: var(--accent);
+		}
+
+		.art {
+			margin: 0;
+			color: #b7ffab;
+			font-size: clamp(11px, 1.8vw, 16px);
+			overflow-x: auto;
+			white-space: pre;
+			text-shadow: 0 0 6px rgba(124, 255, 107, 0.6);
+		}
+
+		.ticker {
+			margin: 14px 0;
+			border-top: 1px dashed var(--line);
+			border-bottom: 1px dashed var(--line);
+			padding: 8px 0;
+			white-space: nowrap;
+			overflow: hidden;
+			position: relative;
+		}
+
+		.ticker span {
+			display: inline-block;
+			padding-left: 100%;
+			animation: scroll 14s linear infinite;
+			color: var(--accent);
+		}
+
+		@keyframes scroll {
+			0% {
+				transform: translateX(0);
+			}
+
+			100% {
+				transform: translateX(-100%);
+			}
+		}
+
+		.blink {
+			animation: blink 1s steps(2, start) infinite;
+			color: var(--accent);
+			font-weight: bold;
+		}
+
+		@keyframes blink {
+			50% {
+				opacity: 0;
+			}
+		}
+
+		h2 {
+			margin: 8px 0;
+			color: #d6ff94;
+			font-size: 1rem;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+		}
+
+		ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		li {
+			margin: 4px 0;
+		}
+
+		li::before {
+			content: ">> ";
+			color: var(--dim);
+		}
+
+		a {
+			color: var(--fg);
+			text-decoration: none;
+			border-bottom: 1px dotted transparent;
+		}
+
+		a:hover,
+		a:focus {
+			color: #ffffff;
+			border-bottom-color: #ffffff;
+			background: rgba(124, 255, 107, 0.18);
+			outline: none;
+		}
+
+		footer {
+			margin-top: 16px;
+			border-top: 1px solid var(--line);
+			padding-top: 10px;
+			color: var(--dim);
+			font-size: 0.9rem;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<main class="screen">
+
+			<pre class="art" aria-label="ASCII banner">
+__        ________ ____       _____
+\ \      / /  ____|  _ \     |___ /
+ \ \ /\ / /| |__  | |_) |      |_ \
+  \ V  V / |  __| |  _ <  --  ___) |
+   \_/\_/  | |____| |_) |    |____/
+	   |______|____/ 
+			</pre>
+
+			<div class="ticker" aria-hidden="true">
+				<span>WELCOME! You just came from <noscript><a>¯\_(ツ)_/¯</a></noscript><a id="referrer"></a></span>
+			</div>
+			<p>
+				<span id="statusText" class="blink">[ONLINE]</span> User: guest<noscript>#¯\_(ツ)_/¯</noscript><span class="random"></span>
+			</p>
+
+			<h2>Available Pages</h2>
+			<ul>
+				<li><a href="00uvod/index.html">00uvod / index.html</a></li>
+				<li><a href="01manipulaciaDOM/index.html">01manipulaciaDOM / index.html</a></li>
+				<li><a href="01manipulaciaDOM/02_vysvetlenie/index.html">01manipulaciaDOM / 02_vysvetlenie / index.html</a></li>
+				<li><a href="01manipulaciaDOM/starter/index.html">01manipulaciaDOM / starter / index.html</a></li>
+				<li><a href="01prve_priklady/index.html">01prve_priklady / index.html</a></li>
+				<li><a href="02bmi/index.html">02bmi / index.html</a></li>
+				<li><a href="2026-02-03/index.html">2026-02-03 / index.html</a></li>
+				<li><a href="2026-02-17/06_spracovanie_formulara_preferovanie_oblasti/index.html">2026-02-17 / 06_spracovanie_formulara_preferovanie_oblasti / index.html</a></li>
+				<li><a href="25.11%20-%20Nagy%20%C5%A0trb%C3%A1k/index.html">25.11 - Nagy Strbak / index.html</a></li>
+				<li><a href="27.1.2026/index.html">27.1.2026 / index.html</a></li>
+				<li><a href="8.1/zadanie/starter/index.html">8.1 / zadanie / starter / index.html</a></li>
+				<li><a href="kontaktny_formular/index.html">kontaktny_formular / index.html</a></li>
+			</ul>
+
+			<footer>
+				Best viewed on a glowing CRT monitor at 1024x768 No trackers. Just HTML.
+			</footer>
+		</main>
+	</div>
+	<script>
+		$(function () {
+			const randomNum = Math.floor(Math.random() * 1000);
+			$(".random").text("#" + randomNum);
+		});
+	</script>
+	<script>
+		$(function () {
+			function getCookie(name) {
+				const cookieParts = document.cookie ? document.cookie.split("; ") : [];
+				for (let i = 0; i < cookieParts.length; i += 1) {
+					const part = cookieParts[i].split("=");
+					const key = part.shift();
+					if (key === name) {
+						return decodeURIComponent(part.join("="));
+					}
+				}
+				return "";
+			}
+
+			function setCookie(name, value, days) {
+				const expires = new Date(Date.now() + days * 86400000).toUTCString();
+				document.cookie = name + "=" + encodeURIComponent(value) + "; expires=" + expires + "; path=/";
+			}
+
+			const rawCount = parseInt(getCookie("retroVisitCount"), 10);
+			const visitCount = Number.isNaN(rawCount) ? 1 : rawCount + 1;
+			setCookie("retroVisitCount", String(visitCount), 365);
+
+			const statusLabel = visitCount % 5 === 0 ? "[OFFLINE]" : "[ONLINE]";
+			$("#statusText").text(statusLabel);
+		});
+	</script>
+	<script>
+		$(function () {
+			const rawReferrer = document.referrer;
+			let sourceSite = "direct visit";
+
+			if (rawReferrer) {
+				try {
+					sourceSite = new URL(rawReferrer).hostname || rawReferrer;
+				} catch (error) {
+					sourceSite = rawReferrer;
+				}
+			}
+
+			$("#referrer").text(sourceSite);
+		});
+	</script>
+</body>
+
+</html>
