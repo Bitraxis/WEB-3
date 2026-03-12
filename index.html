@@ -158,6 +158,20 @@
 		.wasm-line strong {
 			color: var(--accent);
 		}
+
+		.mini-btn {
+			background: #133913;
+			color: #e7ffe1;
+			border: 1px solid var(--line);
+			padding: 2px 8px;
+			font-family: inherit;
+			cursor: pointer;
+		}
+
+		.mini-btn:hover,
+		.mini-btn:focus {
+			background: #1c4f1c;
+		}
 	</style>
     <script src="https://cdn.jsdelivr.net/npm/brython@3.14.0/brython.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/brython@3.14.0/brython_stdlib.js"></script>
@@ -167,6 +181,9 @@
 			.wasm-js-only {
 				display: none;
 			}
+            .wasm-line {
+                display: none;
+            }
 		</style>
 	</noscript>
 </head>
@@ -190,6 +207,11 @@ __        ________ ____       _____
 				<span id="statusText" class="blink">[ONLINE]</span> User: guest<noscript>#¯\_(ツ)_/¯</noscript><span class="random"></span>
 			</p>
 			<p id="wasmText" class="wasm-line"><strong>WASM: </strong><span class="wasm-js-only">waiting for wasm/retro_tools.wasm</span><noscript>OFFLINE | JS DISABLED</noscript></p>
+			<p class="wasm-line">
+				<strong>Brython:</strong>
+				<button id="brythonBtn" class="mini-btn" type="button">Ping</button>
+				<span id="brythonStatus">ready</span>
+			</p>
 
 			<h2>Available Pages</h2>
 			<ul>
@@ -208,10 +230,11 @@ __        ________ ____       _____
 			</ul>
 
 			<footer>
-				| HTML: <span id="htmlVersion">detecting...</span> |
-				JavaScript: <span id="jsVersion">detecting...</span> |
-				jQuery: <span id="jqVersion">detecting...</span> |
-				CSS: <span id="cssVersion">detecting...</span> |
+				| HTML: <span id="htmlVersion"><noscript>¯\_(ツ)_/¯</noscript></span> |
+				JavaScript: <span id="jsVersion"><noscript>¯\_(ツ)_/¯</noscript></span> |
+				jQuery: <span id="jqVersion"><noscript>¯\_(ツ)_/¯</noscript></span> |
+				CSS: <span id="cssVersion"><noscript>¯\_(ツ)_/¯</noscript></span> |
+				Brython: <span id="brythonVersion"><noscript>¯\_(ツ)_/¯</noscript></span> |
 			</footer>
 		</main>
 	</div>
@@ -283,14 +306,20 @@ __        ________ ____       _____
 
 			const jsVersion = (function () {
 				try {
-					new Function("let x = 1; const y = x ?? 0; return ({a: y})?.a;");
-					return "ECMAScript 2020+";
+					// ES2025+ check: import attributes for JSON modules.
+					new Function("return import('./config-data.json', { with: { type: 'json' } });");
+					return "ECMAScript 2025+";
 				} catch (error) {
 					try {
+					new Function("let x = 1; const y = x ?? 0; return ({a: y})?.a;");
+					return "ECMAScript 2020+";
+					} catch (innerError) {
+						try {
 						new Function("let x = 1; const y = x; return y;");
 						return "ECMAScript 2015+";
-					} catch (innerError) {
+						} catch (legacyError) {
 						return "legacy JavaScript";
+						}
 					}
 				}
 			}());
@@ -303,6 +332,17 @@ __        ________ ____       _____
 				const hasGrid = CSS.supports("display", "grid");
 				const hasFlex = CSS.supports("display", "flex");
 				const hasVariables = CSS.supports("--retro", "1");
+				const hasIf = (function () {
+					try {
+						return CSS.supports("color", "if(style(--retro-flag: true): lime; else: green)");
+					} catch (error) {
+						return false;
+					}
+				}());
+
+				if (hasIf) {
+					return "CSS-next";
+				}
 
 				if (hasGrid && hasFlex && hasVariables) {
 					return "modern CSS";
@@ -315,19 +355,63 @@ __        ________ ____       _____
 				return "basic CSS";
 			}());
 
+			const brythonVersion = (function () {
+				if (!window.__BRYTHON__) {
+					return "not loaded";
+				}
+
+				if (Array.isArray(window.__BRYTHON__.implementation) && window.__BRYTHON__.implementation.length > 1) {
+					return String(window.__BRYTHON__.implementation[1]);
+				}
+
+				if (Array.isArray(window.__BRYTHON__.version_info)) {
+					return window.__BRYTHON__.version_info.slice(0, 3).join(".");
+				}
+
+				return "loaded";
+			}());
+
 			$("#htmlVersion").text(htmlVersion);
 			$("#jsVersion").text(jsVersion);
 			$("#jqVersion").text(jqVersion);
 			$("#cssVersion").text(cssVersion);
+			$("#brythonVersion").text(brythonVersion);
 		});
 	</script>
 	<script src="wasm/retro_wasm.js"></script>
+	<script type="text/python">
+from browser import document, window
+
+count = 0
+
+def on_ping(event):
+    global count
+    count += 1
+    document["brythonStatus"].text = f"pong #{count}"
+
+    # Use jQuery from Brython to show JS interop.
+    window.jQuery("#brythonStatus").css("color", "#ffd24d")
+    window.jQuery("#brythonStatus").attr("title", "Updated by Brython + jQuery")
+
+document["brythonBtn"].bind("click", on_ping)
+	</script>
+	<script>
+		window.addEventListener("DOMContentLoaded", function () {
+			if (window.brython) {
+				window.brython();
+			}
+		});
+	</script>
 	<script>
 		if ("serviceWorker" in navigator) {
 			window.addEventListener("load", function () {
-				navigator.serviceWorker.register("./sw.js").catch(function (error) {
-					console.log("Service worker registration failed:", error);
-				});
+				navigator.serviceWorker.register("./sw.js")
+					.then(function (registration) {
+						registration.update();
+					})
+					.catch(function (error) {
+						console.log("Service worker registration failed:", error);
+					});
 			});
 		}
 	</script>
