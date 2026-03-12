@@ -5,6 +5,9 @@ const STATIC_ASSETS = [
   "./manifest.webmanifest",
   "./jquery-4.0.0.min.js",
   "./wasm/retro_wasm.js",
+  "./wasm/retro_tools.wasm",
+  "./brython.min.js",
+  "./brython_stdlib.js",,
   "./README.md"
 ];
 
