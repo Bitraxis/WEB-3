@@ -7,7 +7,7 @@ const STATIC_ASSETS = [
   "./wasm/retro_wasm.js",
   "./wasm/retro_tools.wasm",
   "./brython.min.js",
-  "./brython_stdlib.js",,
+  "./brython_stdlib.js",
   "./README.md"
 ];
 
