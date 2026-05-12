@@ -3,9 +3,9 @@ function pozdrav() {
     vysledok.textContent =  '👍 Mal som ťa pozdraviť, tak ťa zdravím';
     vysledok.style.color = 'green';
     vysledok.style.fontWeight = 'bold';
+    console.log(vysledok);
 }
 
 
 
 
-console.log(vysledok);
