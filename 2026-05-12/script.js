@@ -14,5 +14,17 @@ function zmenFarbuPozadia() {
     meniFarbu.innerText = 'Pozadie: ' + farby[nahodneCislo];
 }
 
+function plus() {
+    let spocitane = document.getElementById('spocitane');
+    spocitane.innerText = parseInt(spocitane.innerText) + 1;
+}
 
+function minus() {
+    let spocitane = document.getElementById('spocitane');
+    spocitane.innerText = parseInt(spocitane.innerText) - 1;
+}
 
+function reset() {
+    let spocitane = document.getElementById('spocitane');
+    spocitane.innerText = 0;
+}

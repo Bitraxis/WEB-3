@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.pink.min.css">
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,6 +13,13 @@
     </div>
     <div id="pozadie">
         <button id="meniFarbu" onclick="zmenFarbuPozadia()">Zmen moje pozadie!</button>
+    </div>
+    <div id="pocitadlo">
+        <span id="spocitane">0</span>
+        <br>
+        <button id="plus" onclick="plus()">+</button>
+        <button id="minus" onclick="minus()">-</button>
+        <button id="reset" onclick="reset()">reset</button>
     </div>
     <script src="script.js"></script>
 </body>
