@@ -1,613 +1,688 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>WEB-3</title>
-	<meta name="theme-color" content="#020a02">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
-	<link rel="manifest" href="manifest.webmanifest"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WEB-3</title>
+    <meta name="theme-color" content="#020a02" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="manifest" href="manifest.webmanifest" />
     <script src="jquery-4.0.0.min.js"></script>
-	<style>
-		:root {
-			--bg: #020a02;
-			--fg: #7cff6b;
-			--dim: #3ea83a;
-			--accent: #ffd24d;
-			--panel: #001500;
-			--line: #36d936;
-		}
+    <style>
+      :root {
+        --bg: #020a02;
+        --fg: #7cff6b;
+        --dim: #3ea83a;
+        --accent: #ffd24d;
+        --panel: #001500;
+        --line: #36d936;
+      }
 
-		* {
-			box-sizing: border-box;
-		}
+      * {
+        box-sizing: border-box;
+      }
 
-		html,
-		body {
-			margin: 0;
-			min-height: 100%;
-		}
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
 
-		body {
-			background: var(--bg);
-			color: var(--fg);
-			font-family: "Courier New", Courier, monospace;
-			line-height: 1.4;
-			background-image:
-				radial-gradient(rgba(124, 255, 107, 0.08) 1px, transparent 1px),
-				linear-gradient(180deg, rgba(124, 255, 107, 0.04) 0%, rgba(124, 255, 107, 0) 40%);
-			background-size: 3px 3px, 100% 100%;
-		}
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family: "Courier New", Courier, monospace;
+        line-height: 1.4;
+        background-image:
+          radial-gradient(rgba(124, 255, 107, 0.08) 1px, transparent 1px),
+          linear-gradient(
+            180deg,
+            rgba(124, 255, 107, 0.04) 0%,
+            rgba(124, 255, 107, 0) 40%
+          );
+        background-size:
+          3px 3px,
+          100% 100%;
+      }
 
-		.wrap {
-			max-width: 920px;
-			margin: 0 auto;
-			padding: 16px;
-		}
+      .wrap {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 16px;
+      }
 
-		.screen {
-			background: var(--panel);
-			border: 3px double var(--line);
-			box-shadow: 0 0 0 2px #0d2f0d, 0 0 24px rgba(124, 255, 107, 0.25) inset;
-			padding: 16px;
-		}
+      .screen {
+        background: var(--panel);
+        border: 3px double var(--line);
+        box-shadow:
+          0 0 0 2px #0d2f0d,
+          0 0 24px rgba(124, 255, 107, 0.25) inset;
+        padding: 16px;
+      }
 
-		.status {
-			margin: 0 0 12px;
-			color: var(--accent);
-		}
+      .status {
+        margin: 0 0 12px;
+        color: var(--accent);
+      }
 
-		.art {
-			margin: 0;
-			color: #b7ffab;
-			font-size: clamp(11px, 1.8vw, 16px);
-			overflow-x: auto;
-			white-space: pre;
-			text-shadow: 0 0 6px rgba(124, 255, 107, 0.6);
-		}
+      .art {
+        margin: 0;
+        color: #b7ffab;
+        font-size: clamp(11px, 1.8vw, 16px);
+        overflow-x: auto;
+        white-space: pre;
+        text-shadow: 0 0 6px rgba(124, 255, 107, 0.6);
+      }
 
-		.ticker {
-			margin: 14px 0;
-			border-top: 1px dashed var(--line);
-			border-bottom: 1px dashed var(--line);
-			padding: 8px 0;
-			white-space: nowrap;
-			overflow: hidden;
-			position: relative;
-		}
+      .ticker {
+        margin: 14px 0;
+        border-top: 1px dashed var(--line);
+        border-bottom: 1px dashed var(--line);
+        padding: 8px 0;
+        white-space: nowrap;
+        overflow: hidden;
+        position: relative;
+      }
 
-		.ticker span {
-			display: inline-block;
-			padding-left: 100%;
-			animation: scroll 14s linear infinite;
-			color: var(--accent);
-		}
+      .ticker span {
+        display: inline-block;
+        padding-left: 100%;
+        animation: scroll 14s linear infinite;
+        color: var(--accent);
+      }
 
-		@keyframes scroll {
-			0% {
-				transform: translateX(0);
-			}
+      @keyframes scroll {
+        0% {
+          transform: translateX(0);
+        }
 
-			100% {
-				transform: translateX(-100%);
-			}
-		}
+        100% {
+          transform: translateX(-100%);
+        }
+      }
 
-		.blink {
-			animation: blink 1s steps(2, start) infinite;
-			color: var(--accent);
-			font-weight: bold;
-		}
+      .blink {
+        animation: blink 1s steps(2, start) infinite;
+        color: var(--accent);
+        font-weight: bold;
+      }
 
-		@keyframes blink {
-			50% {
-				opacity: 0;
-			}
-		}
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
 
-		h2 {
-			margin: 8px 0;
-			color: #d6ff94;
-			font-size: 1rem;
-			letter-spacing: 0.08em;
-			text-transform: uppercase;
-		}
+      h2 {
+        margin: 8px 0;
+        color: #d6ff94;
+        font-size: 1rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
 
-		ul {
-			list-style: none;
-			padding: 0;
-			margin: 0;
-		}
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
 
-		li {
-			margin: 4px 0;
-		}
+      li {
+        margin: 4px 0;
+      }
 
-		li::before {
-			content: ">> ";
-			color: var(--dim);
-		}
+      li::before {
+        content: ">> ";
+        color: var(--dim);
+      }
 
-		a {
-			color: var(--fg);
-			text-decoration: none;
-			border-bottom: 1px dotted transparent;
-		}
+      a {
+        color: var(--fg);
+        text-decoration: none;
+        border-bottom: 1px dotted transparent;
+      }
 
-		a:hover,
-		a:focus {
-			color: #ffffff;
-			border-bottom-color: #ffffff;
-			background: rgba(124, 255, 107, 0.18);
-			outline: none;
-		}
+      a:hover,
+      a:focus {
+        color: #ffffff;
+        border-bottom-color: #ffffff;
+        background: rgba(124, 255, 107, 0.18);
+        outline: none;
+      }
 
-		footer {
-			margin-top: 16px;
-			border-top: 1px solid var(--line);
-			padding-top: 10px;
-			color: var(--dim);
-			font-size: 0.9rem;
-		}
+      footer {
+        margin-top: 16px;
+        border-top: 1px solid var(--line);
+        padding-top: 10px;
+        color: var(--dim);
+        font-size: 0.9rem;
+      }
 
-		.wasm-line {
-			margin: 6px 0 12px;
-			color: var(--dim);
-		}
+      .wasm-line {
+        margin: 6px 0 12px;
+        color: var(--dim);
+      }
 
-		.wasm-line strong {
-			color: var(--accent);
-		}
+      .wasm-line strong {
+        color: var(--accent);
+      }
 
-		.mini-btn {
-			background: #133913;
-			color: #e7ffe1;
-			border: 1px solid var(--line);
-			padding: 2px 8px;
-			font-family: inherit;
-			cursor: pointer;
-		}
+      .mini-btn {
+        background: #133913;
+        color: #e7ffe1;
+        border: 1px solid var(--line);
+        padding: 2px 8px;
+        font-family: inherit;
+        cursor: pointer;
+      }
 
-		.mini-btn:hover,
-		.mini-btn:focus {
-			background: #1c4f1c;
-		}
+      .mini-btn:hover,
+      .mini-btn:focus {
+        background: #1c4f1c;
+      }
 
-		.readme-box {
-			margin: 10px 0 14px;
-			padding: 10px;
-			border: 1px dashed var(--line);
-			background: rgba(0, 0, 0, 0.2);
-		}
+      .readme-box {
+        margin: 10px 0 14px;
+        padding: 10px;
+        border: 1px dashed var(--line);
+        background: rgba(0, 0, 0, 0.2);
+      }
 
-		.readme-content {
-			color: var(--fg);
-		}
+      .readme-content {
+        color: var(--fg);
+      }
 
-		.readme-content h1,
-		.readme-content h2,
-		.readme-content h3,
-		.readme-content h4,
-		.readme-content h5,
-		.readme-content h6 {
-			margin: 10px 0 6px;
-			color: #d6ff94;
-		}
+      .readme-content h1,
+      .readme-content h2,
+      .readme-content h3,
+      .readme-content h4,
+      .readme-content h5,
+      .readme-content h6 {
+        margin: 10px 0 6px;
+        color: #d6ff94;
+      }
 
-		.readme-content p {
-			margin: 8px 0;
-		}
+      .readme-content p {
+        margin: 8px 0;
+      }
 
-		.readme-content ul,
-		.readme-content ol {
-			margin: 8px 0;
-			padding-left: 20px;
-			list-style: initial;
-		}
+      .readme-content ul,
+      .readme-content ol {
+        margin: 8px 0;
+        padding-left: 20px;
+        list-style: initial;
+      }
 
-		.readme-content li::before {
-			content: "";
-		}
+      .readme-content li::before {
+        content: "";
+      }
 
-		.readme-content code {
-			background: #011001;
-			border: 1px solid #184218;
-			padding: 0 4px;
-		}
+      .readme-content code {
+        background: #011001;
+        border: 1px solid #184218;
+        padding: 0 4px;
+      }
 
-		.readme-content pre {
-			background: #011001;
-			border: 1px solid #184218;
-			padding: 8px;
-			overflow: auto;
-		}
-	</style>
+      .readme-content pre {
+        background: #011001;
+        border: 1px solid #184218;
+        padding: 8px;
+        overflow: auto;
+      }
+    </style>
     <script src="brython.min.js"></script>
     <script src="brython_stdlib.js"></script>
 
-	<noscript>
-		<style>
-			.wasm-js-only {
-				display: none;
-			}
-            .wasm-line {
-                display: none;
-            }
-		</style>
-	</noscript>
-</head>
-<body>
-	<div class="wrap">
-		<main class="screen">
-
-			<pre class="art" aria-label="ASCII banner">
+    <noscript>
+      <style>
+        .wasm-js-only {
+          display: none;
+        }
+        .wasm-line {
+          display: none;
+        }
+      </style>
+    </noscript>
+  </head>
+  <body>
+    <div class="wrap">
+      <main class="screen">
+        <pre class="art" aria-label="ASCII banner">
 __        ________ ____       _____
 \ \      / /  ____|  _ \     |___ /
  \ \ /\ / /| |__  | |_) |      |_ \
   \ V  V / |  __| |  _ <  --  ___) |
    \_/\_/  | |____| |_) |    |____/
 	   |______|____/ 
-			</pre>
+			</pre
+        >
 
-			<div class="ticker" aria-hidden="true">
-				<span>WELCOME! You just came from <noscript><a>¯\_(ツ)_/¯</a></noscript><a id="referrer"></a></span>
-			</div>
-			<p>
-				<span id="statusText" class="blink">[ONLINE]</span> User: guest<noscript>#¯\_(ツ)_/¯</noscript><span class="random"></span>
-			</p>
-			<p id="wasmText" class="wasm-line"><strong>WASM: </strong><span class="wasm-js-only">waiting for wasm/retro_tools.wasm</span><noscript>OFFLINE | JS DISABLED</noscript></p>
-			<p class="wasm-line">
-				<strong>Brython:</strong>
-				<button id="brythonBtn" class="mini-btn" type="button">Ping</button>
-				<span id="brythonStatus">ready</span>
-			</p>
-			<section class="readme-box" aria-label="README preview">
-				<h2>README Preview</h2>
-				<div id="readmeContent" class="readme-content">Loading README.md via Brython...</div>
-			</section>
+        <div class="ticker" aria-hidden="true">
+          <span
+            >WELCOME! You just came from <noscript><a>¯\_(ツ)_/¯</a></noscript
+            ><a id="referrer"></a
+          ></span>
+        </div>
+        <p>
+          <span id="statusText" class="blink">[ONLINE]</span> User:
+          guest<noscript>#¯\_(ツ)_/¯</noscript><span class="random"></span>
+        </p>
+        <p id="wasmText" class="wasm-line">
+          <strong>WASM: </strong
+          ><span class="wasm-js-only">waiting for wasm/retro_tools.wasm</span
+          ><noscript>OFFLINE | JS DISABLED</noscript>
+        </p>
+        <p class="wasm-line">
+          <strong>Brython:</strong>
+          <button id="brythonBtn" class="mini-btn" type="button">Ping</button>
+          <span id="brythonStatus">ready</span>
+        </p>
+        <section class="readme-box" aria-label="README preview">
+          <h2>README Preview</h2>
+          <div id="readmeContent" class="readme-content">
+            Loading README.md via Brython...
+          </div>
+        </section>
 
-			<h2>Available Pages</h2>
-			<ul>
-				<li><a href="00uvod/index.html">00uvod / index.html</a></li>
-				<li><a href="01manipulaciaDOM/index.html">01manipulaciaDOM / index.html</a></li>
-				<li><a href="01manipulaciaDOM/02_vysvetlenie/index.html">01manipulaciaDOM / 02_vysvetlenie / index.html</a></li>
-				<li><a href="01manipulaciaDOM/starter/index.html">01manipulaciaDOM / starter / index.html</a></li>
-				<li><a href="01prve_priklady/index.html">01prve_priklady / index.html</a></li>
-				<li><a href="02bmi/index.html">02bmi / index.html</a></li>
-				<li><a href="2026-02-03/index.html">2026-02-03 / index.html</a></li>
-				<li><a href="2026-02-17/06_spracovanie_formulara_preferovanie_oblasti/index.html">2026-02-17 / 06_spracovanie_formulara_preferovanie_oblasti / index.html</a></li>
-				<li><a href="25.11%20-%20Nagy%20%C5%A0trb%C3%A1k/index.html">25.11 - Nagy Strbak / index.html</a></li>
-				<li><a href="27.1.2026/index.html">27.1.2026 / index.html</a></li>
-				<li><a href="8.1/zadanie/starter/index.html">8.1 / zadanie / starter / index.html</a></li>
-				<li><a href="kontaktny_formular/index.html">kontaktny_formular / index.html</a></li>
-			</ul>
+        <h2>Available Pages</h2>
+        <ul>
+          <li><a href="00uvod/index.html">00uvod / index.html</a></li>
+          <li>
+            <a href="01manipulaciaDOM/index.html"
+              >01manipulaciaDOM / index.html</a
+            >
+          </li>
+          <li>
+            <a href="01manipulaciaDOM/02_vysvetlenie/index.html"
+              >01manipulaciaDOM / 02_vysvetlenie / index.html</a
+            >
+          </li>
+          <li>
+            <a href="01manipulaciaDOM/starter/index.html"
+              >01manipulaciaDOM / starter / index.html</a
+            >
+          </li>
+          <li>
+            <a href="01prve_priklady/index.html"
+              >01prve_priklady / index.html</a
+            >
+          </li>
+          <li><a href="02bmi/index.html">02bmi / index.html</a></li>
+          <li><a href="2026-02-03/index.html">2026-02-03 / index.html</a></li>
+          <li>
+            <a
+              href="2026-02-17/06_spracovanie_formulara_preferovanie_oblasti/index.html"
+              >2026-02-17 / 06_spracovanie_formulara_preferovanie_oblasti /
+              index.html</a
+            >
+          </li>
+          <li>
+            <a href="25.11%20-%20Nagy%20%C5%A0trb%C3%A1k/index.html"
+              >25.11 - Nagy Strbak / index.html</a
+            >
+          </li>
+          <li><a href="27.1.2026/index.html">27.1.2026 / index.html</a></li>
+          <li>
+            <a href="8.1/zadanie/starter/index.html"
+              >8.1 / zadanie / starter / index.html</a
+            >
+          </li>
+          <li>
+            <a href="kontaktny_formular/index.html"
+              >kontaktny_formular / index.html</a
+            >
+          </li>
+        </ul>
 
-			<footer>
-				| HTML: <span id="htmlVersion"><noscript>¯\_(ツ)_/¯</noscript></span> |
-				JavaScript: <span id="jsVersion"><noscript>¯\_(ツ)_/¯</noscript></span> |
-				jQuery: <span id="jqVersion"><noscript>¯\_(ツ)_/¯</noscript></span> |
-				CSS: <span id="cssVersion"><noscript>¯\_(ツ)_/¯</noscript></span> |
-				Brython: <span id="brythonVersion"><noscript>¯\_(ツ)_/¯</noscript></span> |
-			</footer>
-		</main>
-	</div>
-	<script>
-		$(function () {
-			const randomNum = Math.floor(Math.random() * 1000);
-			$(".random").text("#" + randomNum);
-		});
-	</script>
-	<script>
-		$(function () {
-			function getCookie(name) {
-				const cookieParts = document.cookie ? document.cookie.split("; ") : [];
-				for (let i = 0; i < cookieParts.length; i += 1) {
-					const part = cookieParts[i].split("=");
-					const key = part.shift();
-					if (key === name) {
-						return decodeURIComponent(part.join("="));
-					}
-				}
-				return "";
-			}
+        <footer>
+          | HTML:
+          <span id="htmlVersion"><noscript>¯\_(ツ)_/¯</noscript></span> |
+          JavaScript:
+          <span id="jsVersion"><noscript>¯\_(ツ)_/¯</noscript></span> | jQuery:
+          <span id="jqVersion"><noscript>¯\_(ツ)_/¯</noscript></span> | CSS:
+          <span id="cssVersion"><noscript>¯\_(ツ)_/¯</noscript></span> |
+          Brython:
+          <span id="brythonVersion"><noscript>¯\_(ツ)_/¯</noscript></span> |
+        </footer>
+      </main>
+    </div>
+    <script>
+      $(function () {
+        const randomNum = Math.floor(Math.random() * 1000);
+        $(".random").text("#" + randomNum);
+      });
+    </script>
+    <script>
+      $(function () {
+        function getCookie(name) {
+          const cookieParts = document.cookie
+            ? document.cookie.split("; ")
+            : [];
+          for (let i = 0; i < cookieParts.length; i += 1) {
+            const part = cookieParts[i].split("=");
+            const key = part.shift();
+            if (key === name) {
+              return decodeURIComponent(part.join("="));
+            }
+          }
+          return "";
+        }
 
-			function setCookie(name, value, days) {
-				const expires = new Date(Date.now() + days * 86400000).toUTCString();
-				document.cookie = name + "=" + encodeURIComponent(value) + "; expires=" + expires + "; path=/";
-			}
+        function setCookie(name, value, days) {
+          const expires = new Date(Date.now() + days * 86400000).toUTCString();
+          document.cookie =
+            name +
+            "=" +
+            encodeURIComponent(value) +
+            "; expires=" +
+            expires +
+            "; path=/";
+        }
 
-			const rawCount = parseInt(getCookie("retroVisitCount"), 10);
-			const visitCount = Number.isNaN(rawCount) ? 1 : rawCount + 1;
-			setCookie("retroVisitCount", String(visitCount), 365);
+        const rawCount = parseInt(getCookie("retroVisitCount"), 10);
+        const visitCount = Number.isNaN(rawCount) ? 1 : rawCount + 1;
+        setCookie("retroVisitCount", String(visitCount), 365);
 
-			const statusLabel = visitCount % 5 === 0 ? "[OFFLINE]" : "[ONLINE]";
-			$("#statusText").text(statusLabel);
-		});
-	</script>
-	<script>
-		$(function () {
-			const rawReferrer = document.referrer;
-			let sourceSite = "direct visit";
+        const statusLabel = visitCount % 5 === 0 ? "[OFFLINE]" : "[ONLINE]";
+        $("#statusText").text(statusLabel);
+      });
+    </script>
+    <script>
+      $(function () {
+        const rawReferrer = document.referrer;
+        let sourceSite = "direct visit";
 
-			if (rawReferrer) {
-				try {
-					sourceSite = new URL(rawReferrer).hostname || rawReferrer;
-				} catch (error) {
-					sourceSite = rawReferrer;
-				}
-			}
+        if (rawReferrer) {
+          try {
+            sourceSite = new URL(rawReferrer).hostname || rawReferrer;
+          } catch (error) {
+            sourceSite = rawReferrer;
+          }
+        }
 
-			$("#referrer").text(sourceSite);
-		});
-	</script>
-	<script>
-		$(function () {
-			const jqVersion = $.fn && $.fn.jquery ? $.fn.jquery : "not loaded";
+        $("#referrer").text(sourceSite);
+      });
+    </script>
+    <script>
+      $(function () {
+        const jqVersion = $.fn && $.fn.jquery ? $.fn.jquery : "not loaded";
 
-			const htmlVersion = (function () {
-				if (!document.doctype) {
-					return "unknown doctype";
-				}
+        const htmlVersion = (function () {
+          if (!document.doctype) {
+            return "unknown doctype";
+          }
 
-				const isHtml5 =
-					document.doctype.name.toLowerCase() === "html" &&
-					document.doctype.publicId === "" &&
-					document.doctype.systemId === "";
+          const isHtml5 =
+            document.doctype.name.toLowerCase() === "html" &&
+            document.doctype.publicId === "" &&
+            document.doctype.systemId === "";
 
-				return isHtml5 ? "HTML5" : "custom doctype";
-			}());
+          return isHtml5 ? "HTML5" : "custom doctype";
+        })();
 
-			const jsVersion = (function () {
-				try {
-					// ES2025+ check: import attributes for JSON modules.
-					new Function("return import('./config-data.json', { with: { type: 'json' } });");
-					return "ECMAScript 2025+";
-				} catch (error) {
-					try {
-					new Function("let x = 1; const y = x ?? 0; return ({a: y})?.a;");
-					return "ECMAScript 2020+";
-					} catch (innerError) {
-						try {
-						new Function("let x = 1; const y = x; return y;");
-						return "ECMAScript 2015+";
-						} catch (legacyError) {
-						return "legacy JavaScript";
-						}
-					}
-				}
-			}());
+        const jsVersion = (function () {
+          try {
+            // ES2025+ check: import attributes for JSON modules.
+            new Function(
+              "return import('./config-data.json', { with: { type: 'json' } });",
+            );
+            return "ECMAScript 2025+";
+          } catch (error) {
+            try {
+              new Function("let x = 1; const y = x ?? 0; return ({a: y})?.a;");
+              return "ECMAScript 2020+";
+            } catch (innerError) {
+              try {
+                new Function("let x = 1; const y = x; return y;");
+                return "ECMAScript 2015+";
+              } catch (legacyError) {
+                return "legacy JavaScript";
+              }
+            }
+          }
+        })();
 
-			const cssVersion = (function () {
-				if (!window.CSS || typeof CSS.supports !== "function") {
-					return "unknown";
-				}
+        const cssVersion = (function () {
+          if (!window.CSS || typeof CSS.supports !== "function") {
+            return "unknown";
+          }
 
-				const hasGrid = CSS.supports("display", "grid");
-				const hasFlex = CSS.supports("display", "flex");
-				const hasVariables = CSS.supports("--retro", "1");
-				const hasIf = (function () {
-					try {
-						return CSS.supports("color", "if(style(--retro-flag: true): lime; else: green)");
-					} catch (error) {
-						return false;
-					}
-				}());
+          const hasGrid = CSS.supports("display", "grid");
+          const hasFlex = CSS.supports("display", "flex");
+          const hasVariables = CSS.supports("--retro", "1");
+          const hasIf = (function () {
+            try {
+              return CSS.supports(
+                "color",
+                "if(style(--retro-flag: true): lime; else: green)",
+              );
+            } catch (error) {
+              return false;
+            }
+          })();
 
-				if (hasIf) {
-					return "CSS-next";
-				}
+          if (hasIf) {
+            return "CSS-next";
+          }
 
-				if (hasGrid && hasFlex && hasVariables) {
-					return "modern CSS";
-				}
+          if (hasGrid && hasFlex && hasVariables) {
+            return "modern CSS";
+          }
 
-				if (hasFlex) {
-					return "CSS3+";
-				}
+          if (hasFlex) {
+            return "CSS3+";
+          }
 
-				return "basic CSS";
-			}());
+          return "basic CSS";
+        })();
 
-			const brythonVersion = (function () {
-				if (!window.__BRYTHON__) {
-					return "not loaded";
-				}
+        const brythonVersion = (function () {
+          if (!window.__BRYTHON__) {
+            return "not loaded";
+          }
 
-				if (Array.isArray(window.__BRYTHON__.implementation) && window.__BRYTHON__.implementation.length > 1) {
-					return String(window.__BRYTHON__.implementation[1]);
-				}
+          if (
+            Array.isArray(window.__BRYTHON__.implementation) &&
+            window.__BRYTHON__.implementation.length > 1
+          ) {
+            return String(window.__BRYTHON__.implementation[1]);
+          }
 
-				if (Array.isArray(window.__BRYTHON__.version_info)) {
-					return window.__BRYTHON__.version_info.slice(0, 3).join(".");
-				}
+          if (Array.isArray(window.__BRYTHON__.version_info)) {
+            return window.__BRYTHON__.version_info.slice(0, 3).join(".");
+          }
 
-				return "loaded";
-			}());
+          return "loaded";
+        })();
 
-			$("#htmlVersion").text(htmlVersion);
-			$("#jsVersion").text(jsVersion);
-			$("#jqVersion").text(jqVersion);
-			$("#cssVersion").text(cssVersion);
-			$("#brythonVersion").text(brythonVersion);
-		});
-	</script>
-	<script src="wasm/retro_wasm.js"></script>
-	<script type="text/python">
-from browser import ajax, document, window
-import re
+        $("#htmlVersion").text(htmlVersion);
+        $("#jsVersion").text(jsVersion);
+        $("#jqVersion").text(jqVersion);
+        $("#cssVersion").text(cssVersion);
+        $("#brythonVersion").text(brythonVersion);
+      });
+    </script>
+    <script src="wasm/retro_wasm.js"></script>
+    <script type="text/python">
+      from browser import ajax, document, window
+      import re
 
-count = 0
-
-
-def on_ping(event):
-	global count
-	count += 1
-	document["brythonStatus"].text = f"pong #{count}"
-
-	# Use jQuery from Brython to show JS interop.
-	window.jQuery("#brythonStatus").css("color", "#ffd24d")
-	window.jQuery("#brythonStatus").attr("title", "Updated by Brython + jQuery")
-
-
-def escape_html(text):
-	return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-
-
-def render_inline(text):
-	safe = escape_html(text)
-	safe = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2" target="_blank" rel="noopener">\1</a>', safe)
-	safe = re.sub(r"`([^`]+)`", r"<code>\1</code>", safe)
-	safe = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", safe)
-	safe = re.sub(r"\*([^*]+)\*", r"<em>\1</em>", safe)
-	return safe
-
-
-def markdown_to_html(markdown_text):
-	lines = markdown_text.splitlines()
-	out = []
-	paragraph = []
-	in_code = False
-	list_type = None
-
-	def flush_paragraph():
-		nonlocal paragraph
-		if paragraph:
-			out.append("<p>" + " ".join(paragraph) + "</p>")
-			paragraph = []
-
-	def close_list():
-		nonlocal list_type
-		if list_type:
-			out.append(f"</{list_type}>")
-			list_type = None
-
-	for raw_line in lines:
-		line = raw_line.rstrip("\n")
-		stripped = line.strip()
-
-		if stripped.startswith("```"):
-			flush_paragraph()
-			close_list()
-			if not in_code:
-				out.append("<pre><code>")
-				in_code = True
-			else:
-				out.append("</code></pre>")
-				in_code = False
-			continue
-
-		if in_code:
-			out.append(escape_html(raw_line))
-			continue
-
-		if stripped == "":
-			flush_paragraph()
-			close_list()
-			continue
-
-		heading = re.match(r"^(#{1,6})\s+(.*)$", stripped)
-		if heading:
-			flush_paragraph()
-			close_list()
-			level = len(heading.group(1))
-			out.append(f"<h{level}>{render_inline(heading.group(2))}</h{level}>")
-			continue
-
-		ul_item = re.match(r"^[-*]\s+(.*)$", stripped)
-		if ul_item:
-			flush_paragraph()
-			if list_type != "ul":
-				close_list()
-				out.append("<ul>")
-				list_type = "ul"
-			out.append(f"<li>{render_inline(ul_item.group(1))}</li>")
-			continue
-
-		ol_item = re.match(r"^\d+\.\s+(.*)$", stripped)
-		if ol_item:
-			flush_paragraph()
-			if list_type != "ol":
-				close_list()
-				out.append("<ol>")
-				list_type = "ol"
-			out.append(f"<li>{render_inline(ol_item.group(1))}</li>")
-			continue
-
-		close_list()
-		paragraph.append(render_inline(stripped))
-
-	flush_paragraph()
-	close_list()
-	if in_code:
-		out.append("</code></pre>")
-
-	return "\n".join(out)
+      count = 0
 
 
-def on_readme_loaded(event):
-	req = event.target
-	if req.status in (0, 200):
-		document["readmeContent"].innerHTML = markdown_to_html(req.text)
-	else:
-		document["readmeContent"].text = "Could not load README.md"
+      def on_ping(event):
+      	global count
+      	count += 1
+      	document["brythonStatus"].text = f"pong #{count}"
+
+      	# Use jQuery from Brython to show JS interop.
+      	window.jQuery("#brythonStatus").css("color", "#ffd24d")
+      	window.jQuery("#brythonStatus").attr("title", "Updated by Brython + jQuery")
 
 
-def load_readme():
-	def on_success(data, *args):
-		document["readmeContent"].innerHTML = markdown_to_html(str(data))
-
-	def on_fail(*args):
-		document["readmeContent"].text = "Could not load README.md"
-
-	try:
-		request = window.jQuery.get("README.md", on_success)
-		request.fail(on_fail)
-	except Exception:
-		document["readmeContent"].text = "Could not load README.md"
+      def escape_html(text):
+      	return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
-document["brythonBtn"].bind("click", on_ping)
-document["brythonStatus"].text = "ready (Brython active)"
-load_readme()
-	</script>
-	<script>
-		window.addEventListener("DOMContentLoaded", function () {
-			if (window.brython) {
-				window.brython();
-			}
-		});
-	</script>
-	<script>
-		window.setTimeout(function () {
-			const readmeElement = document.getElementById("readmeContent");
-			if (!readmeElement) {
-				return;
-			}
+      def render_inline(text):
+      	safe = escape_html(text)
+      	safe = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2" target="_blank" rel="noopener">\1</a>', safe)
+      	safe = re.sub(r"`([^`]+)`", r"<code>\1</code>", safe)
+      	safe = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", safe)
+      	safe = re.sub(r"\*([^*]+)\*", r"<em>\1</em>", safe)
+      	return safe
 
-			if (readmeElement.textContent.indexOf("Loading README.md via Brython...") !== -1) {
-				$.get("README.md")
-					.done(function (data) {
-						readmeElement.textContent = data;
-					})
-					.fail(function () {
-						readmeElement.textContent = "Could not load README.md";
-					});
-			}
-		}, 2500);
-	</script>
-	<script>
-		if ("serviceWorker" in navigator) {
-			window.addEventListener("load", function () {
-				navigator.serviceWorker.register("./sw.js")
-					.then(function (registration) {
-						registration.update();
-					})
-					.catch(function (error) {
-						console.log("Service worker registration failed:", error);
-					});
-			});
-		}
-	</script>
-</body>
 
+      def markdown_to_html(markdown_text):
+      	lines = markdown_text.splitlines()
+      	out = []
+      	paragraph = []
+      	in_code = False
+      	list_type = None
+
+      	def flush_paragraph():
+      		nonlocal paragraph
+      		if paragraph:
+      			out.append("<p>" + " ".join(paragraph) + "</p>")
+      			paragraph = []
+
+      	def close_list():
+      		nonlocal list_type
+      		if list_type:
+      			out.append(f"</{list_type}>")
+      			list_type = None
+
+      	for raw_line in lines:
+      		line = raw_line.rstrip("\n")
+      		stripped = line.strip()
+
+      		if stripped.startswith("```"):
+      			flush_paragraph()
+      			close_list()
+      			if not in_code:
+      				out.append("<pre><code>")
+      				in_code = True
+      			else:
+      				out.append("</code></pre>")
+      				in_code = False
+      			continue
+
+      		if in_code:
+      			out.append(escape_html(raw_line))
+      			continue
+
+      		if stripped == "":
+      			flush_paragraph()
+      			close_list()
+      			continue
+
+      		heading = re.match(r"^(#{1,6})\s+(.*)$", stripped)
+      		if heading:
+      			flush_paragraph()
+      			close_list()
+      			level = len(heading.group(1))
+      			out.append(f"<h{level}>{render_inline(heading.group(2))}</h{level}>")
+      			continue
+
+      		ul_item = re.match(r"^[-*]\s+(.*)$", stripped)
+      		if ul_item:
+      			flush_paragraph()
+      			if list_type != "ul":
+      				close_list()
+      				out.append("<ul>")
+      				list_type = "ul"
+      			out.append(f"<li>{render_inline(ul_item.group(1))}</li>")
+      			continue
+
+      		ol_item = re.match(r"^\d+\.\s+(.*)$", stripped)
+      		if ol_item:
+      			flush_paragraph()
+      			if list_type != "ol":
+      				close_list()
+      				out.append("<ol>")
+      				list_type = "ol"
+      			out.append(f"<li>{render_inline(ol_item.group(1))}</li>")
+      			continue
+
+      		close_list()
+      		paragraph.append(render_inline(stripped))
+
+      	flush_paragraph()
+      	close_list()
+      	if in_code:
+      		out.append("</code></pre>")
+
+      	return "\n".join(out)
+
+
+      def on_readme_loaded(event):
+      	req = event.target
+      	if req.status in (0, 200):
+      		document["readmeContent"].innerHTML = markdown_to_html(req.text)
+      	else:
+      		document["readmeContent"].text = "Could not load README.md"
+
+
+      def load_readme():
+      	def on_success(data, *args):
+      		document["readmeContent"].innerHTML = markdown_to_html(str(data))
+
+      	def on_fail(*args):
+      		document["readmeContent"].text = "Could not load README.md"
+
+      	try:
+      		request = window.jQuery.get("README.md", on_success)
+      		request.fail(on_fail)
+      	except Exception:
+      		document["readmeContent"].text = "Could not load README.md"
+
+
+      document["brythonBtn"].bind("click", on_ping)
+      document["brythonStatus"].text = "ready (Brython active)"
+      load_readme()
+    </script>
+    <script>
+      window.addEventListener("DOMContentLoaded", function () {
+        if (window.brython) {
+          window.brython();
+        }
+      });
+    </script>
+    <script>
+      window.setTimeout(function () {
+        const readmeElement = document.getElementById("readmeContent");
+        if (!readmeElement) {
+          return;
+        }
+
+        if (
+          readmeElement.textContent.indexOf(
+            "Loading README.md via Brython...",
+          ) !== -1
+        ) {
+          $.get("README.md")
+            .done(function (data) {
+              readmeElement.textContent = data;
+            })
+            .fail(function () {
+              readmeElement.textContent = "Could not load README.md";
+            });
+        }
+      }, 2500);
+    </script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker
+            .register("./sw.js")
+            .then(function (registration) {
+              registration.update();
+            })
+            .catch(function (error) {
+              console.log("Service worker registration failed:", error);
+            });
+        });
+      }
+    </script>
+  </body>
 </html>

@@ -38,23 +38,34 @@
       var result = await WebAssembly.instantiate(bytes, {});
       var wasm = result.instance.exports;
 
-      if (!wasm.memory || !wasm.status_ptr || !wasm.signal_strength || !wasm.mood_ptr) {
+      if (
+        !wasm.memory ||
+        !wasm.status_ptr ||
+        !wasm.signal_strength ||
+        !wasm.mood_ptr
+      ) {
         throw new Error("Missing expected WASM exports");
       }
 
       var rawVisit = parseInt(getCookie("retroVisitCount"), 10);
       var visitCount = Number.isNaN(rawVisit) ? 1 : rawVisit;
-      var seed = ((Date.now() >>> 0) ^ ((Math.random() * 4294967295) >>> 0)) >>> 0;
+      var seed =
+        ((Date.now() >>> 0) ^ ((Math.random() * 4294967295) >>> 0)) >>> 0;
 
       var signal = wasm.signal_strength(visitCount >>> 0, seed) >>> 0;
-      var status = readCString(wasm.memory, wasm.status_ptr(visitCount >>> 0) >>> 0);
+      var status = readCString(
+        wasm.memory,
+        wasm.status_ptr(visitCount >>> 0) >>> 0,
+      );
       var mood = readCString(wasm.memory, wasm.mood_ptr(signal) >>> 0);
 
       $output.text("WASM: " + status + " | SIGNAL " + signal + "% | " + mood);
     } catch (error) {
-      $output.text("WASM pending: compile wasm/retro_tools.wat -> wasm/retro_tools.wasm");
+      $output.text(
+        "WASM pending: compile wasm/retro_tools.wat -> wasm/retro_tools.wasm",
+      );
     }
   }
 
   $(loadRetroWasm);
-}());
+})();

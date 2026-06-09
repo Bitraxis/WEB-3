@@ -22,7 +22,6 @@ let rokNarodenia = 2025 - vek;
 // Vypočítaj koľko rokov ti chýba do 18 (18 - vek)
 let doDospelosti = 18 - vek;
 
-
 // ===================================
 // 3. ZOBRAZ ZÁKLADNÉ ÚDAJE
 // ===================================
@@ -37,9 +36,6 @@ document.querySelector("#vek").textContent = vek;
 document.querySelector("#mesto").textContent = mesto;
 document.querySelector("#konicek").textContent = konicek;
 
-
-
-
 // ===================================
 // 4. ZOBRAZ VÝPOČTY
 // ===================================
@@ -50,8 +46,6 @@ document.querySelector("#konicek").textContent = konicek;
 document.querySelector("#rok-narodenia").textContent = rokNarodenia;
 document.querySelector("#do-dospelosti").textContent = doDospelosti;
 
-
-
 // ===================================
 // 5. VYTVOR BIO TEXT
 // ===================================
@@ -61,7 +55,6 @@ document.querySelector("#do-dospelosti").textContent = doDospelosti;
 
 let bioText = `Ahoj! Volám sa ${meno}, mám ${vek} rokov a pochádzam z ${mesto}. Vo voľnom čase rád/-a ${konicek}.`;
 document.querySelector("#o-mne").textContent = bioText;
-
 
 // ===================================
 // 6. UPRAV ŠTÝLY CEZ JAVASCRIPT
@@ -77,4 +70,3 @@ statusElement.textContent = "Profil načítaný!";
 statusElement.classList.remove("nacitavam");
 statusElement.classList.add("uspech");
 statusElement.style.color = "#4CAF50";
-

@@ -1,153 +1,156 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
     <script type="importmap">
-    {
+      {
         "imports": {
-            "@material/web/": "https://esm.run/@material/web/"
+          "@material/web/": "https://esm.run/@material/web/"
         }
-    }
+      }
     </script>
     <script type="module">
-        import '@material/web/all.js';
-        import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+      import "@material/web/all.js";
+      import { styles as typescaleStyles } from "@material/web/typography/md-typescale-styles.js";
 
-        document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+      document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
     </script>
     <script src="/src/brython.js"></script>
     <script src="/src/brython_stdlib.js"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Javascript vs Python - Dominik Nagy  & Dominik Štrbák</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Javascript vs Python - Dominik Nagy & Dominik Štrbák</title>
     <style>
-        table {
-            border-collapse: collapse;
-            border: 2px solid rgb(140 140 140);
-            font-family: sans-serif;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-        }
+      table {
+        border-collapse: collapse;
+        border: 2px solid rgb(140 140 140);
+        font-family: sans-serif;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+      }
 
-        caption {
-            caption-side: bottom;
-            padding: 10px;
-            font-weight: bold;
-        }
+      caption {
+        caption-side: bottom;
+        padding: 10px;
+        font-weight: bold;
+      }
 
-        thead,
-        tfoot {
-            background-color: rgb(228 240 245);
-        }
+      thead,
+      tfoot {
+        background-color: rgb(228 240 245);
+      }
 
-        th,
-        td {
-            border: 1px solid rgb(160 160 160);
-            padding: 8px 10px;
-        }   
-        td:last-of-type {
-            text-align: left;
-        }
+      th,
+      td {
+        border: 1px solid rgb(160 160 160);
+        padding: 8px 10px;
+      }
+      td:last-of-type {
+        text-align: left;
+      }
 
-        tbody > tr:nth-of-type(even) {
-            background-color: rgb(237 238 242);
-        }
+      tbody > tr:nth-of-type(even) {
+        background-color: rgb(237 238 242);
+      }
 
-        tfoot th {
-            text-align: center;
-        }
+      tfoot th {
+        text-align: center;
+      }
 
-        tfoot td {
-            font-weight: bold;
-        }   
+      tfoot td {
+        font-weight: bold;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <table>
-        <caption class="md-typescale-display-small">
-            Javascript vs Python - Dominik Nagy  & Dominik Štrbák
-        </caption>
-        <thead>
-            <tr>
-                <th scope="col"></th>
-                <th scope="col">JavaScript</th>
-                <th scope="col">Python</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row"> Premenné</th>
-                <td>
-                    <pre><code>
+      <caption class="md-typescale-display-small">
+        Javascript vs Python - Dominik Nagy & Dominik Štrbák
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">JavaScript</th>
+          <th scope="col">Python</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Premenné</th>
+          <td>
+            <pre><code>
 let x = 10; // let je blokovo viazaná premenná
 const y = "text"; // const je konštanta
 var z = 30.5; // var je funkciou viazaná premenná
                     </code></pre>
-                </td>
-                <td>
-                    <pre><code>
+          </td>
+          <td>
+            <pre><code>
 x = 10
 y = "text"
 z = 30.5
                     </code></pre>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">Cyklus for</th>
-                <td>
-                    <pre><code>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Cyklus for</th>
+          <td>
+            <pre><code>
 for (let i = 0; i < 5; i++) { 
     console.log(i);
 }
                     </code></pre>
-                </td>
-                <td>
-                    <pre><code>
+          </td>
+          <td>
+            <pre><code>
 for i in range(5):
     print(i)
                     </code></pre>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">Cyklus while</th>
-                <td>
-                    <pre><code>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Cyklus while</th>
+          <td>
+            <pre><code>
 let i = 0;
 while (i < 5) {
     console.log(i);
         i++;
 }
                     </code></pre>
-                </td>
-                <td>
-                    <pre><code>
+          </td>
+          <td>
+            <pre><code>
 i = 0
 while i < 5:
     print(i)
     i += 1
                     </code></pre>
-                </td>   
-            </tr>
-            <tr>
-                <th scope="row">Funkcia</th>
-                <td>
-                    <pre><code>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Funkcia</th>
+          <td>
+            <pre><code>
 function ahoj() {
     console.log("Ahoj, svet!");
 }
                     </code></pre>
-                </td>
-                <td>
-                    <pre><code>
+          </td>
+          <td>
+            <pre><code>
 def ahoj():
     print("Ahoj, svet!")
                     </code></pre>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">Podmienky</th>
-                <td>
-                    <pre><code>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Podmienky</th>
+          <td>
+            <pre><code>
 if (x > 0) {
     console.log("Pozitívne");
 }
@@ -158,9 +161,9 @@ else {
     console.log("Negatívne");
 }
                     </code></pre>
-                </td>
-                <td>
-                    <pre><code>
+          </td>
+          <td>
+            <pre><code>
 if x > 0:
     print("Pozitívne")
 elif x == 0:
@@ -168,41 +171,41 @@ elif x == 0:
 else:
     print("Negatívne")
                     </code></pre>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">Pole</th>
-                <td>
-                    <pre><code>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Pole</th>
+          <td>
+            <pre><code>
 let pole = [1, 2, 3, 4, 5];
                     </code></pre>
-                </td>
-                <td>
-                    <pre><code>
+          </td>
+          <td>
+            <pre><code>
 pole = [1, 2, 3, 4, 5]
                     </code></pre>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">Slovník</th>
-                <td>
-                    <pre><code>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Slovník</th>
+          <td>
+            <pre><code>
 let slovnik = { "meno": "Ján", "vek": 30 };
                     </code></pre>
-                </td>
-                <td>
-                    <pre><code>
+          </td>
+          <td>
+            <pre><code>
 slovnik = { "meno": "Ján", "vek": 30 }
                     </code></pre>
-                </td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <th scope="row">Autor</th>
-                <td colspan="2">Dominik Nagy  & Dominik Štrbák</td>
-            </tr>
-        </tfoot>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th scope="row">Autor</th>
+          <td colspan="2">Dominik Nagy & Dominik Štrbák</td>
+        </tr>
+      </tfoot>
     </table>
-</body>
+  </body>
 </html>

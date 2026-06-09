@@ -8,25 +8,27 @@ const STATIC_ASSETS = [
   "./wasm/retro_tools.wasm",
   "./brython.min.js",
   "./brython_stdlib.js",
-  "./README.md"
+  "./README.md",
 ];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS)),
   );
   self.skipWaiting();
 });
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(
-        keys
-          .filter((key) => key !== CACHE_NAME)
-          .map((key) => caches.delete(key))
-      )
-    )
+    caches
+      .keys()
+      .then((keys) =>
+        Promise.all(
+          keys
+            .filter((key) => key !== CACHE_NAME)
+            .map((key) => caches.delete(key)),
+        ),
+      ),
   );
   self.clients.claim();
 });
@@ -70,7 +72,9 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  const isDocument = event.request.mode === "navigate" || event.request.destination === "document";
+  const isDocument =
+    event.request.mode === "navigate" ||
+    event.request.destination === "document";
 
   if (isDocument) {
     event.respondWith(networkFirst(event.request));

@@ -1,113 +1,147 @@
 <!doctype html>
 <html lang="sk">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vizualizér Triednych Známok</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vizualizér Triednych Známok</title>
     <link rel="stylesheet" href="assets/css/styles.css" />
-</head>
-<body>
-  <div class="container">
-    <header>
-      <h1>📊 Vizualizér Triednych Známok</h1>
-      <p>Zadaj svoje známky a sleduj svoj progres</p>
-    </header>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>📊 Vizualizér Triednych Známok</h1>
+        <p>Zadaj svoje známky a sleduj svoj progres</p>
+      </header>
 
-    <main>
-      <!-- Target Average -->
-      <div class="card">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-          <div>
-            <h3 style="font-weight: 600; margin-bottom: 0.25rem;">🎯 Cieľový Priemer</h3>
-            <p style="font-size: 0.875rem; color: var(--gray);">Nastav si svoj cieľ</p>
-          </div>
-          <input 
-            type="number" 
-            id="targetInput" 
-            class="target-input"
-            min="1" 
-            max="5" 
-            step="0.1"
-            value="2.5"
-          />
-        </div>
-      </div>
-
-      <!-- Add Subject Form -->
-      <div class="card">
-        <h2 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem;">Pridať Nový Predmet</h2>
-        <form id="addSubjectForm" class="form-group">
-          <input 
-            type="text" 
-            id="subjectName" 
-            class="form-input"
-            placeholder="Názov predmetu (napr. Matematika)"
-            required
-          />
-          <select id="subjectWeight" class="form-select">
-            <option value="1">Váha: 1</option>
-            <option value="2">Váha: 2</option>
-            <option value="3">Váha: 3</option>
-          </select>
-          <button type="submit" class="btn btn-primary">Pridať Predmet</button>
-        </form>
-      </div>
-
-      <!-- Summary -->
-      <div id="summary" class="card summary-card" style="display: none;">
-        <h2 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem;">Celkový Priemer</h2>
-        <div class="summary-display">
-          <div>
-            <div id="weightedAverage" class="summary-value">0.00</div>
-            <div id="status" class="summary-status"></div>
-          </div>
-          <div class="comparison">
-            <div class="comparison-label">Porovnanie s cieľom</div>
-            <div id="difference" class="comparison-value">+0.00</div>
-            <div id="comparisonText" class="comparison-label"></div>
+      <main>
+        <!-- Target Average -->
+        <div class="card">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              flex-wrap: wrap;
+              gap: 1rem;
+            "
+          >
+            <div>
+              <h3 style="font-weight: 600; margin-bottom: 0.25rem">
+                🎯 Cieľový Priemer
+              </h3>
+              <p style="font-size: 0.875rem; color: var(--gray)">
+                Nastav si svoj cieľ
+              </p>
+            </div>
+            <input
+              type="number"
+              id="targetInput"
+              class="target-input"
+              min="1"
+              max="5"
+              step="0.1"
+              value="2.5"
+            />
           </div>
         </div>
-        <div class="progress-bar">
-          <div id="progressFill" class="progress-fill" style="width: 0%;"></div>
+
+        <!-- Add Subject Form -->
+        <div class="card">
+          <h2
+            style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem"
+          >
+            Pridať Nový Predmet
+          </h2>
+          <form id="addSubjectForm" class="form-group">
+            <input
+              type="text"
+              id="subjectName"
+              class="form-input"
+              placeholder="Názov predmetu (napr. Matematika)"
+              required
+            />
+            <select id="subjectWeight" class="form-select">
+              <option value="1">Váha: 1</option>
+              <option value="2">Váha: 2</option>
+              <option value="3">Váha: 3</option>
+            </select>
+            <button type="submit" class="btn btn-primary">
+              Pridať Predmet
+            </button>
+          </form>
         </div>
-      </div>
 
-      <!-- Subject Cards -->
-      <div id="subjectsContainer"></div>
+        <!-- Summary -->
+        <div id="summary" class="card summary-card" style="display: none">
+          <h2
+            style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem"
+          >
+            Celkový Priemer
+          </h2>
+          <div class="summary-display">
+            <div>
+              <div id="weightedAverage" class="summary-value">0.00</div>
+              <div id="status" class="summary-status"></div>
+            </div>
+            <div class="comparison">
+              <div class="comparison-label">Porovnanie s cieľom</div>
+              <div id="difference" class="comparison-value">+0.00</div>
+              <div id="comparisonText" class="comparison-label"></div>
+            </div>
+          </div>
+          <div class="progress-bar">
+            <div
+              id="progressFill"
+              class="progress-fill"
+              style="width: 0%"
+            ></div>
+          </div>
+        </div>
 
-      <!-- Statistics -->
-      <div id="statistics" class="card" style="display: none;">
-        <h2 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem;">Štatistiky</h2>
-        <div id="statsGrid" class="stats-grid"></div>
-      </div>
+        <!-- Subject Cards -->
+        <div id="subjectsContainer"></div>
 
-      <!-- Subject Table -->
-      <div id="tableContainer" class="card table-card" style="display: none;">
-        <h2 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem;">Zoznam Predmetov</h2>
-        <table>
-          <thead>
-            <tr>
-              <th data-sort="name">Predmet</th>
-              <th data-sort="weight">Váha</th>
-              <th data-sort="count">Počet Známok</th>
-              <th data-sort="average">Priemer</th>
-            </tr>
-          </thead>
-          <tbody id="subjectsTableBody"></tbody>
-        </table>
-      </div>
+        <!-- Statistics -->
+        <div id="statistics" class="card" style="display: none">
+          <h2
+            style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem"
+          >
+            Štatistiky
+          </h2>
+          <div id="statsGrid" class="stats-grid"></div>
+        </div>
 
-      <!-- Empty State -->
-      <div id="emptyState" class="card empty-state">
-        <p>➕ Pridaj svoj prvý predmet</p>
-      </div>
-    </main>
+        <!-- Subject Table -->
+        <div id="tableContainer" class="card table-card" style="display: none">
+          <h2
+            style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem"
+          >
+            Zoznam Predmetov
+          </h2>
+          <table>
+            <thead>
+              <tr>
+                <th data-sort="name">Predmet</th>
+                <th data-sort="weight">Váha</th>
+                <th data-sort="count">Počet Známok</th>
+                <th data-sort="average">Priemer</th>
+              </tr>
+            </thead>
+            <tbody id="subjectsTableBody"></tbody>
+          </table>
+        </div>
 
-    <footer>
-      <p>Vytvorené pre sledenie študijného progresu</p>
-    </footer>
-  </div>
+        <!-- Empty State -->
+        <div id="emptyState" class="card empty-state">
+          <p>➕ Pridaj svoj prvý predmet</p>
+        </div>
+      </main>
 
-  <script src="assets/js/script.js"></script>
-</body>
+      <footer>
+        <p>Vytvorené pre sledenie študijného progresu</p>
+      </footer>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+  </body>
 </html>

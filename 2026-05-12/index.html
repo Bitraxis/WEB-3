@@ -1,40 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://necolas.github.io/normalize.css/8.0.1/normalize.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div id="vysledok1">
-        <button id="pozdrav" onclick="pozdrav()"> Pozdrav! </button>
+      <button id="pozdrav" onclick="pozdrav()">Pozdrav!</button>
     </div>
     <div id="pozadie">
-        <button id="meniFarbu" onclick="zmenFarbuPozadia()">Zmen moje pozadie!</button>
+      <button id="meniFarbu" onclick="zmenFarbuPozadia()">
+        Zmen moje pozadie!
+      </button>
     </div>
     <div id="pocitadlo">
-        <span id="spocitane">0</span>
-        <br>
-        <button id="plus" onclick="plus()">+</button>
-        <button id="minus" onclick="minus()">-</button>
-        <button id="reset" onclick="reset()">reset</button>
+      <span id="spocitane">0</span>
+      <br />
+      <button id="plus" onclick="plus()">+</button>
+      <button id="minus" onclick="minus()">-</button>
+      <button id="reset" onclick="reset()">reset</button>
     </div>
     <div id="zmenapisma">
-        <span id="zmenma">Ja sa zmením!</span>
-        <br>
-        <button id="vacsie" onclick="vacsie()">vacsie</button>
-        <button id="mensie" onclick="mensie()">mensie</button>
-        <button id="zmenafontu" onclick="zmenfont()">zmen font</button>
-        <button id="reset2" onclick="reset2()">reset</button>
+      <span id="zmenma">Ja sa zmením!</span>
+      <br />
+      <button id="vacsie" onclick="vacsie()">vacsie</button>
+      <button id="mensie" onclick="mensie()">mensie</button>
+      <button id="zmenafontu" onclick="zmenfont()">zmen font</button>
+      <button id="reset2" onclick="reset2()">reset</button>
     </div>
     <div id="nahodnecislo">
-        <span id="cislo"></span>
-        <br>
-        <button id="generuj" onclick="generuj()">nahodne cislo </button>
-        <button id="farba" onclick="farba()"> nahodna farba </button>
+      <span id="cislo"></span>
+      <br />
+      <button id="generuj" onclick="generuj()">nahodne cislo</button>
+      <button id="farba" onclick="farba()">nahodna farba</button>
     </div>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

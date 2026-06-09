@@ -19,7 +19,6 @@ let rokNarodenia = aktualnyRok - vek;
 // Vypočítaj koľko rokov ti chýba do 18 (18 - vek)
 let doDospelosti = 18 - vek;
 
-
 // ===================================
 // 3. ZOBRAZ ZÁKLADNÉ ÚDAJE
 // ===================================
@@ -34,7 +33,6 @@ document.querySelector("#vek").textContent = vek;
 document.querySelector("#mesto").textContent = mesto;
 document.querySelector("#konicek").textContent = konicek;
 
-
 // ===================================
 // 4. ZOBRAZ VÝPOČTY
 // ===================================
@@ -44,7 +42,6 @@ document.querySelector("#konicek").textContent = konicek;
 
 document.querySelector("#rok-narodenia").textContent = rokNarodenia;
 document.querySelector("#do-dospelosti").textContent = doDospelosti;
-
 
 // ===================================
 // 5. VYTVOR BIO TEXT

@@ -1,28 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BMI kalkulačka</title>
-    <link rel="stylesheet" href="assets/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body>
     <main id="main" class="main">
-        <h1>BMI Kalkulačka</h1>
-        
-        <div class="input-group">
-            <input id="hmotnost" type="number" name="hmotnost" placeholder="napr. 80" required>
-            <label for="hmotnost">Hmotnosť (kg)</label>
-        </div>
+      <h1>BMI Kalkulačka</h1>
 
-        <div class="input-group">
-            <input id="vyska" type="number" name="vyska" placeholder="napr. 180" required >
-            <label for="vyska">Výška (cm)</label>
-        </div>
+      <div class="input-group">
+        <input
+          id="hmotnost"
+          type="number"
+          name="hmotnost"
+          placeholder="napr. 80"
+          required
+        />
+        <label for="hmotnost">Hmotnosť (kg)</label>
+      </div>
 
-        <button id="btnAccept">Výpočet</button>
-        <p id="out" class=""></p>
+      <div class="input-group">
+        <input
+          id="vyska"
+          type="number"
+          name="vyska"
+          placeholder="napr. 180"
+          required
+        />
+        <label for="vyska">Výška (cm)</label>
+      </div>
+
+      <button id="btnAccept">Výpočet</button>
+      <p id="out" class=""></p>
     </main>
     <script src="assets/script.js"></script>
-</body>
+  </body>
 </html>
