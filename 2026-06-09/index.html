@@ -1,147 +1,905 @@
 <!doctype html>
 <html lang="sk">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vizualizér Triednych Známok</title>
-    <link rel="stylesheet" href="assets/css/stylesheet.css" />
-  </head>
-  <body>
-    <div class="container">
-      <header>
-        <h1>📊 Vizualizér Triednych Známok</h1>
-        <p>Zadaj svoje známky a sleduj svoj progres</p>
-      </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vizualizér Triednych Známok</title>
+  <style>
+    :root {
+      --green: #22c55e;
+      --yellow: #f59e0b;
+      --orange: #f97316;
+      --red: #ef4444;
+      --blue: #3b82f6;
+      --gray: #6b7280;
+      --light-gray: #f3f4f6;
+      --white: #ffffff;
+    }
 
-      <main>
-        <!-- Target Average -->
-        <div class="card">
-          <div
-            style="
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              flex-wrap: wrap;
-              gap: 1rem;
-            "
-          >
-            <div>
-              <h3 style="font-weight: 600; margin-bottom: 0.25rem">
-                🎯 Cieľový Priemer
-              </h3>
-              <p style="font-size: 0.875rem; color: var(--gray)">
-                Nastav si svoj cieľ
-              </p>
-            </div>
-            <input
-              type="number"
-              id="targetInput"
-              class="target-input"
-              min="1"
-              max="5"
-              step="0.1"
-              value="2.5"
-            />
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: var(--light-gray);
+      color: #374151;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1, h2, h3 {
+      color: #1f2937;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    header h1 {
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      color: var(--gray);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      border: 1px solid #e5e7eb;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      transition: box-shadow 0.2s;
+    }
+
+    .card:hover {
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    /* Subject Card */
+    .subject-card {
+      position: relative;
+    }
+
+    .subject-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .subject-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .subject-weight {
+      font-size: 0.875rem;
+      color: var(--gray);
+      margin-left: 0.5rem;
+    }
+
+    .delete-subject {
+      background: none;
+      border: none;
+      color: #ef4444;
+      cursor: pointer;
+      padding: 0.25rem;
+      border-radius: 4px;
+      opacity: 0.7;
+      transition: opacity 0.2s, background 0.2s;
+    }
+
+    .delete-subject:hover {
+      opacity: 1;
+      background: #fee2e2;
+    }
+
+    /* Grades */
+    .grades-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .grade-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .grade-tag .delete-grade {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.125rem;
+      border-radius: 50%;
+      opacity: 0.6;
+      transition: opacity 0.2s, background 0.2s;
+    }
+
+    .grade-tag .delete-grade:hover {
+      opacity: 1;
+      background: rgba(0,0,0,0.1);
+    }
+
+    /* Grade colors */
+    .grade-1 { background: #d1fae5; color: #065f46; }
+    .grade-2 { background: #dbeafe; color: #1e40af; }
+    .grade-3 { background: #fef3c7; color: #92400e; }
+    .grade-4 { background: #fed7aa; color: #9a3412; }
+    .grade-5 { background: #fee2e2; color: #991b1b; }
+
+    /* Add Grade */
+    .add-grade-select {
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      background: var(--white);
+      cursor: pointer;
+    }
+
+    .add-grade-select:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+
+    /* Average Bar */
+    .average-display {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .average-label {
+      font-size: 0.875rem;
+      color: var(--gray);
+    }
+
+    .average-bar {
+      flex: 1;
+      height: 16px;
+      background: #e5e7eb;
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+
+    .average-bar-fill {
+      height: 100%;
+      border-radius: 9999px;
+      transition: width 0.3s ease;
+    }
+
+    .average-value {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    /* Average colors */
+    .avg-green { background: var(--green); }
+    .avg-yellow { background: var(--yellow); }
+    .avg-orange { background: var(--orange); }
+    .avg-red { background: var(--red); }
+
+    /* Form */
+    .form-group {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .form-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.625rem 0.875rem;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 0.875rem;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+
+    .form-select {
+      padding: 0.625rem 0.875rem;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      background: var(--white);
+      cursor: pointer;
+    }
+
+    .form-select:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+
+    .btn {
+      padding: 0.625rem 1.25rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      background: #2563eb;
+    }
+
+    /* Summary */
+    .summary-card {
+      background: linear-gradient(90deg, #eff6ff, #f5f3ff);
+    }
+
+    .summary-value {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #1f2937;
+      line-height: 1;
+    }
+
+    .summary-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+
+    .status-excellent { color: var(--green); }
+    .status-good { color: var(--yellow); }
+    .status-needs-work { color: var(--orange); }
+    .status-bad { color: var(--red); }
+
+    .comparison {
+      text-align: center;
+    }
+
+    .comparison-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .comparison-label {
+      font-size: 0.875rem;
+      color: var(--gray);
+    }
+
+    /* Progress Bar */
+    .progress-bar {
+      height: 12px;
+      background: #e5e7eb;
+      border-radius: 9999px;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--blue);
+      border-radius: 9999px;
+      transition: width 0.5s ease;
+    }
+
+    /* Table */
+    .table-card {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      font-weight: 600;
+      color: var(--gray);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    th:hover {
+      color: #1f2937;
+    }
+
+    th.sorted-asc::after {
+      content: ' ↑';
+    }
+
+    th.sorted-desc::after {
+      content: ' ↓';
+    }
+
+    tr:hover {
+      background: #f9fafb;
+    }
+
+    /* Statistics */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    .stat-item.green { background: #d1fae5; }
+    .stat-item.red { background: #fee2e2; }
+    .stat-item.blue { background: #dbeafe; }
+    .stat-item.orange { background: #fed7aa; }
+
+    .stat-icon {
+      font-size: 1.25rem;
+    }
+
+    .stat-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--gray);
+    }
+
+    .stat-value {
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    /* Target */
+    .target-input {
+      width: 80px;
+      text-align: center;
+      padding: 0.5rem;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .target-input:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--gray);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e5e7eb;
+      color: var(--gray);
+      font-size: 0.875rem;
+    }
+
+    /* Responsive */
+    @media (min-width: 640px) {
+      body {
+        padding: 1.5rem;
+      }
+
+      .form-group {
+        flex-wrap: nowrap;
+      }
+
+      .summary-display {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📊 Vizualizér Triednych Známok</h1>
+      <p>Zadaj svoje známky a sleduj svoj progres</p>
+    </header>
+
+    <main>
+      <!-- Target Average -->
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h3 style="font-weight: 600; margin-bottom: 0.25rem;">🎯 Cieľový Priemer</h3>
+            <p style="font-size: 0.875rem; color: var(--gray);">Nastav si svoj cieľ</p>
+          </div>
+          <input 
+            type="number" 
+            id="targetInput" 
+            class="target-input"
+            min="1" 
+            max="5" 
+            step="0.1"
+            value="2.5"
+          />
+        </div>
+      </div>
+
+      <!-- Add Subject Form -->
+      <div class="card">
+        <h2 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem;">Pridať Nový Predmet</h2>
+        <form id="addSubjectForm" class="form-group">
+          <input 
+            type="text" 
+            id="subjectName" 
+            class="form-input"
+            placeholder="Názov predmetu (napr. Matematika)"
+            required
+          />
+          <select id="subjectWeight" class="form-select">
+            <option value="1">Váha: 1</option>
+            <option value="2">Váha: 2</option>
+            <option value="3">Váha: 3</option>
+          </select>
+          <button type="submit" class="btn btn-primary">Pridať Predmet</button>
+        </form>
+      </div>
+
+      <!-- Summary -->
+      <div id="summary" class="card summary-card" style="display: none;">
+        <h2 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem;">Celkový Priemer</h2>
+        <div class="summary-display">
+          <div>
+            <div id="weightedAverage" class="summary-value">0.00</div>
+            <div id="status" class="summary-status"></div>
+          </div>
+          <div class="comparison">
+            <div class="comparison-label">Porovnanie s cieľom</div>
+            <div id="difference" class="comparison-value">+0.00</div>
+            <div id="comparisonText" class="comparison-label"></div>
           </div>
         </div>
+        <div class="progress-bar">
+          <div id="progressFill" class="progress-fill" style="width: 0%;"></div>
+        </div>
+      </div>
 
-        <!-- Add Subject Form -->
-        <div class="card">
-          <h2
-            style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem"
-          >
-            Pridať Nový Predmet
-          </h2>
-          <form id="addSubjectForm" class="form-group">
-            <input
-              type="text"
-              id="subjectName"
-              class="form-input"
-              placeholder="Názov predmetu (napr. Matematika)"
-              required
-            />
-            <select id="subjectWeight" class="form-select">
-              <option value="1">Váha: 1</option>
-              <option value="2">Váha: 2</option>
-              <option value="3">Váha: 3</option>
+      <!-- Subject Cards -->
+      <div id="subjectsContainer"></div>
+
+      <!-- Statistics -->
+      <div id="statistics" class="card" style="display: none;">
+        <h2 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem;">Štatistiky</h2>
+        <div id="statsGrid" class="stats-grid"></div>
+      </div>
+
+      <!-- Subject Table -->
+      <div id="tableContainer" class="card table-card" style="display: none;">
+        <h2 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem;">Zoznam Predmetov</h2>
+        <table>
+          <thead>
+            <tr>
+              <th data-sort="name">Predmet</th>
+              <th data-sort="weight">Váha</th>
+              <th data-sort="count">Počet Známok</th>
+              <th data-sort="average">Priemer</th>
+            </tr>
+          </thead>
+          <tbody id="subjectsTableBody"></tbody>
+        </table>
+      </div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="card empty-state">
+        <p>➕ Pridaj svoj prvý predmet</p>
+      </div>
+    </main>
+
+    <footer>
+      <p>Vytvorené pre sledenie študijného progresu</p>
+    </footer>
+  </div>
+
+  <script>
+    // ========== DATA ==========
+    let data = {
+      subjects: [],
+      targetAverage: 2.5
+    };
+
+    // ========== HELPER FUNCTIONS ==========
+    function calculateAverage(grades) {
+      if (grades.length === 0) return 0;
+      const sum = grades.reduce((a, b) => a + b, 0);
+      return sum / grades.length;
+    }
+
+    function calculateWeightedAverage(subjects) {
+      if (subjects.length === 0) return 0;
+      const total = subjects.reduce((sum, subject) => {
+        const avg = calculateAverage(subject.grades);
+        return sum + avg * subject.weight;
+      }, 0);
+      const totalWeight = subjects.reduce((sum, s) => sum + s.weight, 0);
+      return total / totalWeight;
+    }
+
+    function getAverageColor(avg) {
+      if (avg <= 1.5) return 'avg-green';
+      if (avg <= 2.5) return 'avg-yellow';
+      if (avg <= 3.5) return 'avg-orange';
+      return 'avg-red';
+    }
+
+    function getAverageStatus(avg) {
+      if (avg <= 1.5) return { label: 'Výborne', class: 'status-excellent' };
+      if (avg <= 2.5) return { label: 'V poriadku', class: 'status-good' };
+      if (avg <= 3.5) return { label: 'Treba zapracovať', class: 'status-needs-work' };
+      return { label: 'Zle', class: 'status-bad' };
+    }
+
+    function getGradeClass(grade) {
+      return `grade-tag grade-${grade}`;
+    }
+
+    // ========== LOCAL STORAGE ==========
+    function saveData() {
+      localStorage.setItem('gradeVisualizerData', JSON.stringify(data));
+    }
+
+    function loadData() {
+      const saved = localStorage.getItem('gradeVisualizerData');
+      if (saved) {
+        data = JSON.parse(saved);
+      }
+    }
+
+    // ========== RENDER FUNCTIONS ==========
+    function renderSubjectCard(subject) {
+      const avg = calculateAverage(subject.grades);
+      const colorClass = getAverageColor(avg);
+      const barWidth = Math.min(avg * 20, 100);
+
+      let gradesHTML = '';
+      subject.grades.forEach((grade, index) => {
+        gradesHTML += `
+          <span class="${getGradeClass(grade)}">
+            ${grade}
+            <button class="delete-grade" onclick="deleteGrade('${subject.id}', ${index})">✕</button>
+          </span>
+        `;
+      });
+
+      return `
+        <div class="card subject-card" data-id="${subject.id}">
+          <div class="subject-header">
+            <div>
+              <div class="subject-name">${subject.name}<span class="subject-weight">Váha: ${subject.weight}</span></div>
+            </div>
+            <button class="delete-subject" onclick="deleteSubject('${subject.id}')">🗑️</button>
+          </div>
+          <div class="grades-container">
+            ${gradesHTML || '<span style="color: var(--gray);">Žiadne známky</span>'}
+          </div>
+          <div style="margin-bottom: 1rem;">
+            <select class="add-grade-select" onchange="addGrade('${subject.id}', this.value); this.value='';">
+              <option value="" disabled selected>Pridať známku</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
             </select>
-            <button type="submit" class="btn btn-primary">
-              Pridať Predmet
-            </button>
-          </form>
-        </div>
-
-        <!-- Summary -->
-        <div id="summary" class="card summary-card" style="display: none">
-          <h2
-            style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem"
-          >
-            Celkový Priemer
-          </h2>
-          <div class="summary-display">
-            <div>
-              <div id="weightedAverage" class="summary-value">0.00</div>
-              <div id="status" class="summary-status"></div>
-            </div>
-            <div class="comparison">
-              <div class="comparison-label">Porovnanie s cieľom</div>
-              <div id="difference" class="comparison-value">+0.00</div>
-              <div id="comparisonText" class="comparison-label"></div>
-            </div>
           </div>
-          <div class="progress-bar">
-            <div
-              id="progressFill"
-              class="progress-fill"
-              style="width: 0%"
-            ></div>
+          <div class="average-display">
+            <span class="average-label">Priemer:</span>
+            <div class="average-bar">
+              <div class="average-bar-fill ${colorClass}" style="width: ${barWidth}%;"></div>
+            </div>
+            <span class="average-value ${colorClass.replace('avg', 'text')}">${avg.toFixed(2)}</span>
           </div>
         </div>
+      `;
+    }
 
-        <!-- Subject Cards -->
-        <div id="subjectsContainer"></div>
+    function renderSubjectCards() {
+      const container = document.getElementById('subjectsContainer');
+      if (data.subjects.length === 0) {
+        container.innerHTML = '';
+        return;
+      }
+      container.innerHTML = data.subjects.map(renderSubjectCard).join('');
+    }
 
-        <!-- Statistics -->
-        <div id="statistics" class="card" style="display: none">
-          <h2
-            style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem"
-          >
-            Štatistiky
-          </h2>
-          <div id="statsGrid" class="stats-grid"></div>
+    function renderSummary() {
+      const summary = document.getElementById('summary');
+      const weightedAvg = calculateWeightedAverage(data.subjects);
+      const diff = weightedAvg - data.targetAverage;
+      const status = getAverageStatus(weightedAvg);
+      const progress = (weightedAvg / 5) * 100;
+
+      document.getElementById('weightedAverage').textContent = weightedAvg.toFixed(2);
+      document.getElementById('status').innerHTML = `<span class="${status.class}">${status.label}</span>`;
+      document.getElementById('difference').textContent = (diff >= 0 ? '+' : '') + diff.toFixed(2);
+      document.getElementById('comparisonText').textContent = `Si ${diff >= 0 ? 'nad' : 'pod'} svojím cieľom 🎯`;
+      document.getElementById('progressFill').style.width = `${Math.min(progress, 100)}%`;
+
+      summary.style.display = 'block';
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('subjectsTableBody');
+      const container = document.getElementById('tableContainer');
+      
+      if (data.subjects.length === 0) {
+        container.style.display = 'none';
+        return;
+      }
+
+      tbody.innerHTML = data.subjects.map(subject => {
+        const avg = calculateAverage(subject.grades);
+        const colorClass = getAverageColor(avg).replace('avg', 'text');
+        return `
+          <tr>
+            <td>${subject.name}</td>
+            <td>${subject.weight}</td>
+            <td>${subject.grades.length}</td>
+            <td><span class="${colorClass}">${avg.toFixed(2)}</span></td>
+          </tr>
+        `;
+      }).join('');
+
+      container.style.display = 'block';
+    }
+
+    function renderStatistics() {
+      const stats = document.getElementById('statistics');
+      const grid = document.getElementById('statsGrid');
+      
+      if (data.subjects.length === 0) {
+        stats.style.display = 'none';
+        return;
+      }
+
+      const allGrades = data.subjects.flatMap(s => s.grades);
+      const count1 = allGrades.filter(g => g === 1).length;
+      const count5 = allGrades.filter(g => g === 5).length;
+
+      const subjectAverages = data.subjects.map(s => ({
+        name: s.name,
+        avg: calculateAverage(s.grades)
+      }));
+
+      const bestSubject = subjectAverages.reduce((a, b) => a.avg < b.avg ? a : b);
+      const worstSubject = subjectAverages.reduce((a, b) => a.avg > b.avg ? a : b);
+
+      grid.innerHTML = `
+        <div class="stat-item green">
+          <span class="stat-icon">🏆</span>
+          <div class="stat-content">
+            <span class="stat-label">Najlepší predmet</span>
+            <span class="stat-value">${bestSubject.name} (${bestSubject.avg.toFixed(2)})</span>
+          </div>
         </div>
-
-        <!-- Subject Table -->
-        <div id="tableContainer" class="card table-card" style="display: none">
-          <h2
-            style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem"
-          >
-            Zoznam Predmetov
-          </h2>
-          <table>
-            <thead>
-              <tr>
-                <th data-sort="name">Predmet</th>
-                <th data-sort="weight">Váha</th>
-                <th data-sort="count">Počet Známok</th>
-                <th data-sort="average">Priemer</th>
-              </tr>
-            </thead>
-            <tbody id="subjectsTableBody"></tbody>
-          </table>
+        <div class="stat-item red">
+          <span class="stat-icon">⚠️</span>
+          <div class="stat-content">
+            <span class="stat-label">Najhorší predmet</span>
+            <span class="stat-value">${worstSubject.name} (${worstSubject.avg.toFixed(2)})</span>
+          </div>
         </div>
-
-        <!-- Empty State -->
-        <div id="emptyState" class="card empty-state">
-          <p>➕ Pridaj svoj prvý predmet</p>
+        <div class="stat-item blue">
+          <span class="stat-icon">📈</span>
+          <div class="stat-content">
+            <span class="stat-label">Počet jednotiek</span>
+            <span class="stat-value">${count1}</span>
+          </div>
         </div>
-      </main>
+        <div class="stat-item orange">
+          <span class="stat-icon">📉</span>
+          <div class="stat-content">
+            <span class="stat-label">Počet päťok</span>
+            <span class="stat-value">${count5}</span>
+          </div>
+        </div>
+      `;
 
-      <footer>
-        <p>Vytvorené pre sledenie študijného progresu</p>
-      </footer>
-    </div>
+      stats.style.display = 'block';
+    }
 
-    <script src="assets/js/script.js"></script>
-  </body>
+    function renderAll() {
+      renderSubjectCards();
+      renderSummary();
+      renderTable();
+      renderStatistics();
+      
+      const emptyState = document.getElementById('emptyState');
+      emptyState.style.display = data.subjects.length === 0 ? 'block' : 'none';
+    }
+
+    // ========== TABLE SORTING ==========
+    let sortConfig = { key: null, direction: 'asc' };
+
+    function sortTable(key) {
+      if (sortConfig.key === key) {
+        sortConfig.direction = sortConfig.direction === 'asc' ? 'desc' : 'asc';
+      } else {
+        sortConfig = { key, direction: 'asc' };
+      }
+
+      const tbody = document.getElementById('subjectsTableBody');
+      const sorted = [...data.subjects].sort((a, b) => {
+        let aVal, bVal;
+
+        switch (key) {
+          case 'name':
+            aVal = a.name.toLowerCase();
+            bVal = b.name.toLowerCase();
+            return sortConfig.direction === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+          case 'weight':
+            aVal = a.weight;
+            bVal = b.weight;
+            break;
+          case 'count':
+            aVal = a.grades.length;
+            bVal = b.grades.length;
+            break;
+          case 'average':
+            aVal = calculateAverage(a.grades);
+            bVal = calculateAverage(b.grades);
+            break;
+          default:
+            return 0;
+        }
+
+        return sortConfig.direction === 'asc' ? aVal - bVal : bVal - aVal;
+      });
+
+      tbody.innerHTML = sorted.map(subject => {
+        const avg = calculateAverage(subject.grades);
+        const colorClass = getAverageColor(avg).replace('avg', 'text');
+        return `
+          <tr>
+            <td>${subject.name}</td>
+            <td>${subject.weight}</td>
+            <td>${subject.grades.length}</td>
+            <td><span class="${colorClass}">${avg.toFixed(2)}</span></td>
+          </tr>
+        `;
+      }).join('');
+
+      // Update sort indicators
+      document.querySelectorAll('th').forEach(th => {
+        th.classList.remove('sorted-asc', 'sorted-desc');
+        if (th.dataset.sort === key) {
+          th.classList.add(`sorted-${sortConfig.direction}`);
+        }
+      });
+    }
+
+    // ========== EVENT HANDLERS ==========
+    function addSubject(name, weight) {
+      data.subjects.push({
+        id: Date.now().toString(),
+        name,
+        weight: parseInt(weight),
+        grades: []
+      });
+      saveData();
+      renderAll();
+    }
+
+    function addGrade(subjectId, grade) {
+      if (!grade) return;
+      const subject = data.subjects.find(s => s.id === subjectId);
+      if (subject) {
+        subject.grades.push(parseInt(grade));
+        saveData();
+        renderAll();
+      }
+    }
+
+    function deleteGrade(subjectId, index) {
+      const subject = data.subjects.find(s => s.id === subjectId);
+      if (subject) {
+        subject.grades.splice(index, 1);
+        saveData();
+        renderAll();
+      }
+    }
+
+    function deleteSubject(subjectId) {
+      data.subjects = data.subjects.filter(s => s.id !== subjectId);
+      saveData();
+      renderAll();
+    }
+
+    function setTargetAverage(value) {
+      data.targetAverage = parseFloat(value) || 0;
+      saveData();
+      renderSummary();
+    }
+
+    // ========== INITIALIZATION ==========
+    document.addEventListener('DOMContentLoaded', () => {
+      loadData();
+
+      // Set target input value
+      document.getElementById('targetInput').value = data.targetAverage;
+
+      // Add subject form
+      document.getElementById('addSubjectForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('subjectName').value.trim();
+        const weight = document.getElementById('subjectWeight').value;
+        if (name) {
+          addSubject(name, weight);
+          e.target.reset();
+        }
+      });
+
+      // Target input
+      document.getElementById('targetInput').addEventListener('change', (e) => {
+        setTargetAverage(e.target.value);
+      });
+
+      // Table sorting
+      document.querySelectorAll('th[data-sort]').forEach(th => {
+        th.addEventListener('click', () => {
+          sortTable(th.dataset.sort);
+        });
+      });
+
+      // Initial render
+      renderAll();
+    });
+  </script>
+</body>
 </html>
