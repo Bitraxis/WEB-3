@@ -112,7 +112,7 @@
           th.classList.add(`sorted-${sortConfig.direction}`);
         }
       });
-    }
+    });
 
     // ========== EVENT HANDLERS ==========
     function addSubject(name, weight) {
